@@ -12,4 +12,4 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 COPY ./ /var/www/html/
 
-ENTRYPOINT ["./entrypoint"]
+ENTRYPOINT ["./entrypoint-dev"]
