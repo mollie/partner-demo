@@ -20,7 +20,7 @@ function down() { ### stop development environment
 }
 
 function logs() { ### show php-fpm logs
-  docker-compose -f docker-compose-prod.yml exec php-fpm logs -f
+  docker-compose -f docker-compose-dev.yml exec php-fpm logs -f
 }
 
 function bash() { ### access a given container
