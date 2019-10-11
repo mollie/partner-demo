@@ -1,7 +1,6 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 set -a
-
 source .env
 
 function help() { ### Show the list of possible functions
