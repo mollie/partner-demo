@@ -6,10 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
 
-if (false === in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
-    echo 'Warning: The console should be invoked via the CLI version of PHP, not the '.\PHP_SAPI.' SAPI'.\PHP_EOL;
-}
-
 set_time_limit(0);
 
 require dirname(__DIR__).'/vendor/autoload.php';
@@ -19,17 +15,10 @@ if (!class_exists(Application::class)) {
 }
 
 $input = new ArgvInput();
-if (null !== $env = $input->getParameterOption(['--env', '-e'], null, true)) {
-    putenv('APP_ENV='.$_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = $env);
-}
+$env = $input->getParameterOption(['--env', '-e'], $_ENV['APP_ENV'] ?? 'dev', true);
+$debug = (bool) filter_var($_ENV['APP_DEBUG'], FILTER_VALIDATE_BOOLEAN);
 
-if ($input->hasParameterOption('--no-debug', true)) {
-    putenv('APP_DEBUG='.$_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = '0');
-}
-
-require dirname(__DIR__).'/config/bootstrap.php';
-
-if ($_SERVER['APP_DEBUG']) {
+if ($debug) {
     umask(0000);
 
     if (class_exists(Debug::class)) {
@@ -37,6 +26,6 @@ if ($_SERVER['APP_DEBUG']) {
     }
 }
 
-$kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+$kernel = new Kernel($env, $debug);
 $application = new Application($kernel);
 $application->run($input);

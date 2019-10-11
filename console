@@ -23,6 +23,10 @@ function logs() { ### show php-fpm logs
   docker-compose -f docker-compose-dev.yml exec php-fpm logs -f
 }
 
+function exec() { ### stop development environment
+  docker-compose -f docker-compose-dev.yml exec "$@"
+}
+
 function bash() { ### access a given container
   docker-compose -f docker-compose-dev.yml exec "$1" bash
 }
