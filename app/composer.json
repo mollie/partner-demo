@@ -45,7 +45,7 @@
     },
     "scripts": {
         "test:cs": "phpcs --standard=config/phpcs.xml --colors -ps",
-        "test:stan": "phpstan analyse src --level=max --ansi",
+        "test:stan": "phpstan analyse src tests --level=max --ansi",
         "test:unit": "phpunit -c config/phpunit.xml --testdox --color=always --testsuite Unit",
         "test:int": "phpunit -c config/phpunit.xml --testdox --color=always --testsuite Integration",
         "tests": [
