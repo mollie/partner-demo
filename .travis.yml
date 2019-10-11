@@ -12,7 +12,7 @@ before_install:
     - sudo service mysql stop
 
 install:
-    - ./console up
+    - ./console upd
 
 after_failure:
     - ./console logs
