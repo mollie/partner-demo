@@ -15,7 +15,7 @@ install:
     - ./console upd
 
 script:
-    - ./console help # temporary only
+    - ./console tests
 
 after_failure:
     - ./console logs

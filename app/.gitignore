@@ -1,4 +1,6 @@
 ###> symfony/framework-bundle ###
+/config/.phpunit.result.cache
+/.phpcs-cache
 /public/bundles/
 /var/
 /vendor/

@@ -19,6 +19,10 @@ function down() { ### stop development environment
   docker-compose -f docker-compose-dev.yml down
 }
 
+function tests() { ### run all tests (coding standards, static analysis, unit, integration)
+  docker-compose -f docker-compose-dev.yml exec php-fpm composer run tests
+}
+
 function logs() { ### show php-fpm logs
   docker-compose -f docker-compose-dev.yml exec php-fpm logs -f
 }
