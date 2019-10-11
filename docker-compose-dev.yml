@@ -1,0 +1,18 @@
+version: '3'
+services:
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_USER}
+            MYSQL_DATABASE: ${DB_BASE}
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+
+    php-fpm:
+        image: ${IMAGE_NAME}/symfony-app
+        build:
+            context: ./app
+        links:
+            - mysql
+        ports:
+            - ${APP_PORT}:80
