@@ -9,19 +9,19 @@ Trigger the console to see valid commands
 ./console
 ```
 
-Start the dev environment (detached)
+Start dev environment
 ```shell script
 ./console upd # run environment detached
 # or
 ./console up # run environment attached (tail -f php and mysql logs)
 ```
 
-Connect to `fpm-php` container
+Connect to container (`fpm-php` default)
 ```shell script
 ./console bash
 ```
 
 Now that you have the environment up and running you can stop by:
- - pressing keys `ctrl+c` when attached (`./console up`)
- - `./console down` when detached (`./console upd`)
+ - Pressing keys `ctrl+c` when attached (`./console up`)
+ - typing `./console down` when detached (`./console upd`)
 
