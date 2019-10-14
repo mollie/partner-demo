@@ -3,7 +3,7 @@
 set -e
 
 # if there are migrations to run
-# ./bin/wait-for "${DB_HOST}:${DB_PORT}" -- \
-#   ./bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+./wait-for "${DB_HOST}:${DB_PORT}" -- \
+  php artisan migrate
 
-php -S 0.0.0.0:80 -t public/
+php artisan serve --port=80 --host=0.0.0.0
