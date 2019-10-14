@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -e
+
+# if there are migrations to run
+# ./bin/wait-for "${DB_HOST}:${DB_PORT}" -- \
+#   ./bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+
+php -S 0.0.0.0:80 -t public/
