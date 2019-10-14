@@ -3,7 +3,9 @@ services:
     mysql:
         image: mysql:5.7
         environment:
-            MYSQL_ROOT_PASSWORD: ${DB_USER}
+            MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASS}
             MYSQL_DATABASE: ${DB_BASE}
         ports:
             - ${DB_PORT}:${DB_PORT}
