@@ -10,6 +10,7 @@ before_install:
     - sudo apt-get update
     - sudo apt-get -y install ucommon-utils docker-ce
     - sudo service mysql stop
+    - alias md5="md5sum"
 
 install:
     - ./console upd

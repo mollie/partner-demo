@@ -15,8 +15,26 @@ services:
         build:
             context: ./app
         volumes:
+            - ./app/bin:/var/www/html/bin
+            - ./app/config:/var/www/html/config
+            - ./app/public:/var/www/html/public
+            - ./app/src:/var/www/html/src
+            - ./app/tests:/var/www/html/tests
+            - ./app/composer.json:/var/www/html/composer.json
+            - ./app/composer.lock:/var/www/html/composer.lock
+            - ./app/symfony.lock:/var/www/html/symfony.lock
+            - ./app/phpstan.neon:/var/www/html/phpstan.neon
             - .bashrc:/root/.bashrc
         links:
             - mysql
+        environment:
+            APP_ENV: dev
+            APP_DEBUG: 'true'
+            APP_SECRET: ${APP_SECRET}
+            DB_HOST: ${DB_HOST}
+            DB_PORT: ${DB_PORT}
+            DATABASE_URL: 'mysql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_BASE}'
         ports:
             - ${APP_PORT}:80
+        entrypoint:
+            "./entrypoint-dev"
