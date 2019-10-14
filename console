@@ -31,7 +31,7 @@ function bash() { ### access a given container (php-fpm default)
   docker-compose -f docker-compose-dev.yml exec ${1:-php-fpm} bash
 }
 
-if [ "_$1" = "_" ]; then
+if [ "${1:- }" = " " ]; then
   help
 else
   "$@"
