@@ -11,7 +11,7 @@ function up() { ### build and start development environment
   docker-compose -f docker-compose-dev.yml up --build
 }
 
-function upd() { ### build and start development detached environment
+function upd() { ### build and start development environment detached
   docker-compose -f docker-compose-dev.yml up --build --detach
 }
 
@@ -19,16 +19,16 @@ function down() { ### stop development environment
   docker-compose -f docker-compose-dev.yml down
 }
 
-function logs() { ### show php-fpm logs
-  docker-compose -f docker-compose-dev.yml exec php-fpm logs -f
+function logs() { ### show environment logs (optionally: mysql|php-fpm)
+  docker-compose -f docker-compose-dev.yml logs ${1:-}
 }
 
 function exec() { ### stop development environment
   docker-compose -f docker-compose-dev.yml exec "$@"
 }
 
-function bash() { ### access a given container
-  docker-compose -f docker-compose-dev.yml exec "$1" bash
+function bash() { ### access a given container (php-fpm default)
+  docker-compose -f docker-compose-dev.yml exec ${1:-php-fpm} bash
 }
 
 if [ "_$1" = "_" ]; then
