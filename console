@@ -3,36 +3,40 @@
 set -a
 source .env
 
-function help() { ### Show the list of possible functions
-  grep -E '^function.*?###' $0 | sed "s/^function //g" | sed "s/()/:/g" | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-12s\033[0m %s\n", $1, $2}'
+function _compose() {
+  docker-compose -f docker-compose-dev.yml "$@"
 }
 
-function up() { ### build and start development environment
-  docker-compose -f docker-compose-dev.yml up --build
+function help() { ### Show the list of possible functions - ./console [help]
+  grep -E '^function.*?###' $0 | sed "s/^function //g" | sed "s/()/:/g" | awk 'BEGIN {FS = ":(.*?)### "}; {printf "\033[36m%-7s\033[0m %s\n", $1, $2}' | awk 'BEGIN {FS = " - "}; {printf "%-88s \033[90m%s\n", $1, $2}'
 }
 
-function upd() { ### build and start development environment detached
-  docker-compose -f docker-compose-dev.yml up --build --detach
+function up() { ### Build and start development environment - ./console up
+  _compose up --build
 }
 
-function down() { ### stop development environment
-  docker-compose -f docker-compose-dev.yml down
+function upd() { ### Build and start development environment detached - ./console upd
+  _compose up --build --detach
 }
 
-function tests() { ### run all tests (coding standards, static analysis, unit, integration)
-  docker-compose -f docker-compose-dev.yml exec php-fpm composer run tests
+function down() { ### Stop development environment - ./console down
+  _compose down
 }
 
-function logs() { ### show environment logs (optionally: mysql|php-fpm)
-  docker-compose -f docker-compose-dev.yml logs ${1:-}
+function tests() { ### Run all tests (coding standards, static analysis, unit, integration) - ./console tests
+  _compose exec php-fpm composer run tests
 }
 
-function exec() { ### stop development environment
-  docker-compose -f docker-compose-dev.yml exec ${1:-php-fpm} "$@"
+function logs() { ### Show container logs - ./console logs [php-fpm|mysql]
+  _compose logs ${1:-}
 }
 
-function bash() { ### access a given container (php-fpm default)
-  docker-compose -f docker-compose-dev.yml exec ${1:-php-fpm} bash
+function exec() { ### Execute bash command on container - ./console exec php-fpm|mysql command [command [command [...]]]
+  _compose exec ${1} "${@:2}"
+}
+
+function bash() { ### Access a given container - ./console bash php-fpm|mysql (php-fpm default)
+  _compose exec ${1:-php-fpm} bash
 }
 
 if [ "${1:- }" = " " ]; then
