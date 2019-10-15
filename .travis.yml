@@ -13,7 +13,6 @@ before_install:
     - alias md5="md5sum"
 
 install:
-    - ./console exec php-fpm ls -lha vendor/bin
     - ./console upd
 
 script:
