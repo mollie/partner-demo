@@ -11,11 +11,11 @@ services:
             - ${DB_PORT}:${DB_PORT}
 
     php-fpm:
-        image: ${IMAGE_NAME}/symfony-app
+        image: ${IMAGE_NAME}/laravel-app
         build:
-            context: ./app
+            context: ./laravel
         volumes:
-            - ./app:/var/www/html
+            - ./laravel:/var/www/html
             - .bashrc:/root/.bashrc
         links:
             - mysql
