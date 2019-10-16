@@ -47,6 +47,7 @@ services:
             APP_KEY: ${APP_KEY}
             APP_DEBUG: ${APP_DEBUG}
             APP_URL: ${APP_URL}
+            MOLLIE_KEY: ${MOLLIE_KEY}
         ports:
             - ${APP_PORT}:80
         entrypoint:

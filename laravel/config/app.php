@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\MollieApiClientServiceProvider::class,
 
         /*
          * Application Service Providers...
