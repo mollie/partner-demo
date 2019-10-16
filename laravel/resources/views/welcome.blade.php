@@ -79,11 +79,16 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('login') }}">@lang('Login')</a>
-                    <a href="{{ route('register') }}">@lang('Register')</a>
+                    @guest
+                        <a href="{{ route('login') }}">@lang('Login')</a>
+                        <a href="{{ route('register') }}">@lang('Register')</a>
+                    @endguest
+                    @auth
+                        <a href="{{ route('home') }}">@lang('Home')</a>
+                    @endauth
                     <span>|</span>
-                    <a href="https://docs.mollie.com/reference/v2/payments-api/create-payment">@lang('Docs')</a>
-                    <a href="https://github.com/mollie/partner-demo">GitHub</a>
+                    <a href="https://docs.mollie.com/reference/v2/payments-api/create-payment" target="_blank">@lang('Docs')</a>
+                    <a href="https://github.com/mollie/partner-demo" target="_blank">GitHub</a>
                 </div>
             </div>
         </div>
