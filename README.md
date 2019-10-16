@@ -23,5 +23,5 @@ Connect to container (`fpm-php` default)
 
 Now that you have the environment up and running you can stop by:
  - Pressing keys `ctrl+c` when attached (`./console up`), then
- - Running `./console down`
+ - `./console down`
 
