@@ -2,10 +2,19 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use DateTime;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property int id
+ * @property string company_name
+ * @property string website
+ * @property string email
+ * @property DateTime email_verified_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
+ */
 class User extends Authenticatable
 {
     use Notifiable;
