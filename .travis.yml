@@ -16,7 +16,6 @@ install:
     - ./console upd
 
 script:
-    - ./console exec php-fpm composer install
     - ./console tests
 
 after_failure:
