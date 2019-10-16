@@ -11,12 +11,28 @@ services:
             - ${DB_PORT}:${DB_PORT}
 
     php-fpm:
-        image: ${IMAGE_NAME}/symfony-app
+        image: ${IMAGE_NAME}/laravel-app
         build:
-            context: ./app
+            context: ./laravel
         volumes:
-            - ./app:/var/www/html
             - .bashrc:/root/.bashrc
+            - ./laravel/app:/var/www/html/app
+            - ./laravel/bootstrap:/var/www/html/bootstrap
+            - ./laravel/config:/var/www/html/config
+            - ./laravel/database:/var/www/html/database
+            - ./laravel/public:/var/www/html/public
+            - ./laravel/resources:/var/www/html/resources
+            - ./laravel/routes:/var/www/html/routes
+            - ./laravel/storage:/var/www/html/storage
+            - ./laravel/tests:/var/www/html/tests
+            - ./laravel/artisan:/var/www/html/artisan
+            - ./laravel/composer.json:/var/www/html/composer.json
+            - ./laravel/composer.lock:/var/www/html/composer.lock
+            - ./laravel/package.json:/var/www/html/package.json
+            - ./laravel/package-lock.json:/var/www/html/package-lock.json
+            - ./laravel/phpunit.xml:/var/www/html/phpunit.xml
+            - ./laravel/server.php:/var/www/html/server.php
+            - ./laravel/webpack.mix.js:/var/www/html/webpack.mix.js
         links:
             - mysql
         environment:
