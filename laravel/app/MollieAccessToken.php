@@ -16,6 +16,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class MollieAccessToken extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'access_token',
+        'refresh_token',
+        'expires_at',
+    ];
     protected $casts = [
         'expires_at' => 'datetime',
     ];
@@ -23,5 +29,10 @@ class MollieAccessToken extends Model
     protected function setExpiresAtAttribute(DateTime $value)
     {
         $this->attributes['expires_at'] = $value;
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->expires_at->getTimestamp() > time();
     }
 }

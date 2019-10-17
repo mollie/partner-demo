@@ -38,7 +38,7 @@
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('settings_payment') }}">{{ __('Settings') }}</a>
+                                <a class="nav-link" href="{{ route('payment_status') }}">{{ __('Settings') }}</a>
                             </li>
                         @endauth
                     </ul>

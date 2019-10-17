@@ -2,6 +2,6 @@
 
 @section('dashboard_content')
     <div>
-        <a class="btn btn-">Connect to mollie</a>
+        Congratulations, You are already connected to Mollie :)
     </div>
 @endsection

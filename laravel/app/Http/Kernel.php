@@ -61,6 +61,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        /** mollie */
+        'connected_to_mollie' => \App\Http\Middleware\Mollie\ConnectedToMollieMiddleware::class,
+        'not_connected_to_mollie' => \App\Http\Middleware\Mollie\NotConnectedToMollieMiddleware::class,
     ];
 
     /**
