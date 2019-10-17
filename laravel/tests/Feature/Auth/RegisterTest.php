@@ -96,8 +96,7 @@ class RegisterTest extends TestCase
                 'id' => 1,
                 'company_name' => 'Mollie B.V',
                 'website' => 'https://www.mollie.com/en/',
-                'email' => 'info@mollie.com',
-                'email_verified_at' => null,
+                'email' => 'info@mollie.com'
             ],
             $user->toArray()
         );

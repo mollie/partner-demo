@@ -19,4 +19,9 @@ class MollieAccessToken extends Model
     protected $casts = [
         'expires_at' => 'datetime',
     ];
+
+    protected function setExpiresAtAttribute(DateTime $value)
+    {
+        $this->attributes['expires_at'] = $value;
+    }
 }
