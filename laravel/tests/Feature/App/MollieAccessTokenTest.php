@@ -1,20 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace App;
-
-function time(): int
-{
-    return strtotime('2019-01-01 10:10:10');
-}
-
 namespace Tests\Feature\App;
 
 use App\MollieAccessToken;
 use DateTime;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MollieAccessTokenTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testWhenExpiresAtHasADateBeforeTodayThenIsExpiredIsTrue(): void
     {
         $expiresAt = new DateTime('2018-12-31 08:02:29');

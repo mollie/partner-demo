@@ -73,8 +73,8 @@ class RegisterTest extends TestCase
                 'expected' => ['password' => ['The password field is required.']],
             ],
             'short password' => [
-                'postData' => array_merge($this->postData, ['password' => '123', 'password_confirmation' => '123']),
-                'expected' => ['password' => ['The password must be at least 8 characters.']],
+                'postData' => array_merge($this->postData, ['password' => '12', 'password_confirmation' => '12']),
+                'expected' => ['password' => ['The password must be at least 3 characters.']],
             ],
             'empty password_confirmation' => [
                 'postData' => array_merge($this->postData, ['password_confirmation' => '']),

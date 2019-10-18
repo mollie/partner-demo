@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit\Services\Mollie;
+namespace Tests\Feature\Services\Mollie;
 
 use App\MollieAccessToken;
 use App\Repositories\MollieAccessTokenRepository;
@@ -10,7 +10,7 @@ use DateTime;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use Mollie\OAuth2\Client\Provider\Mollie;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class RefreshTokenServiceTest extends TestCase
 {

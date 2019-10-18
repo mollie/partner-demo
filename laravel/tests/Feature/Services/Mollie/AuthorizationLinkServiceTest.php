@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit\Services\Mollie;
+namespace Tests\Feature\Services\Mollie;
 
 use App\Exceptions\UserAlreadyConnectedToMollie;
 use App\MollieAccessToken;
@@ -9,7 +9,7 @@ use App\Services\Mollie\AuthorizationLinkService;
 use App\User;
 use Mollie\OAuth2\Client\Provider\Mollie;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class AuthorizationLinkServiceTest extends TestCase
 {

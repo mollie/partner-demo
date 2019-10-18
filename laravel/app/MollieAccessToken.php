@@ -22,9 +22,15 @@ class MollieAccessToken extends Model
         'refresh_token',
         'expires_at',
     ];
+
     protected $casts = [
         'expires_at' => 'datetime',
     ];
+
+    protected function setExpiresAtAttribute(DateTime $value)
+    {
+        $this->attributes['expires_at'] = $value;
+    }
 
     public function isExpired(): bool
     {

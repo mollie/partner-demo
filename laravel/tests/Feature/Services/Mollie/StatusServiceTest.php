@@ -1,13 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App;
-
-function time(): int
-{
-    return strtotime('2019-01-01 10:10:10');
-}
-
-namespace Tests\Unit\Services\Mollie;
+namespace Tests\Feature\Services\Mollie;
 
 use App\Exceptions\UserNotConnectedToMollie;
 use App\MollieAccessToken;
@@ -18,7 +11,7 @@ use App\Services\Mollie\StatusService;
 use App\User;
 use DateTime;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class StatusServiceTest extends TestCase
 {
