@@ -6,7 +6,11 @@ test -f .env || cp .env.sample .env
 source .env
 
 function _compose() {
-  docker-compose -f docker-compose-dev.yml "$@"
+  docker-compose -f docker-compose-prod.yml "$@"
+}
+
+function _compose_dev() {
+  _compose -f docker-compose-dev.yml "$@"
 }
 
 function help() { ### Show the list of possible functions - ./console [help]
@@ -14,35 +18,35 @@ function help() { ### Show the list of possible functions - ./console [help]
 }
 
 function up() { ### Build and start development environment - ./console up
-  _compose up --build
+  _compose_dev up --build
 }
 
 function upd() { ### Build and start development environment detached - ./console upd
-  _compose up --build --detach
+  _compose_dev up --build --detach
 }
 
 function down() { ### Stop development environment - ./console down
-  _compose down
+  _compose_dev down
 }
 
 function tests() { ### Run all tests (coding standards, static analysis, unit, integration) - ./console tests
-  _compose exec php-fpm composer run tests
+  _compose_dev exec php-fpm composer run tests
 }
 
 function logs() { ### Show container logs - ./console logs [php-fpm|mysql]
-  _compose logs ${1:-}
+  _compose_dev logs ${1:-}
 }
 
 function artisan() { ### Execute artisan command on php-fpm container - ./console exec php-fpm|mysql command [command [command [...]]]
-  _compose exec php-fpm php artisan "$@"
+  _compose_dev exec php-fpm php artisan "$@"
 }
 
 function exec() { ### Execute bash command on container - ./console exec php-fpm|mysql command [command [command [...]]]
-  _compose exec ${1} "${@:2}"
+  _compose_dev exec ${1} "${@:2}"
 }
 
 function bash() { ### Access a given container - ./console bash php-fpm|mysql (php-fpm default)
-  _compose exec ${1:-php-fpm} bash
+  _compose_dev exec ${1:-php-fpm} bash
 }
 
 if [ "${1:- }" = " " ]; then
