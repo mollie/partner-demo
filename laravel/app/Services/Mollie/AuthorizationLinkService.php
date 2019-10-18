@@ -23,7 +23,7 @@ class AuthorizationLinkService
     }
 
     /**
-     * @throws Exception
+     * @throws UserAlreadyConnectedToMollie
      */
     public function getLink(User $user): string
     {

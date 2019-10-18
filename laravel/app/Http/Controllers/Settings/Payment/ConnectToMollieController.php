@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Settings\Payment;
 
+use App\Exceptions\UserAlreadyConnectedToMollie;
 use App\Http\Controllers\Controller;
 use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\AuthorizationLinkService;
 use Illuminate\Http\Request;
 
-class ConnectedToMollieController extends Controller
+class ConnectToMollieController extends Controller
 {
     /** @var AuthorizationLinkService */
     private $authorizeService;
@@ -25,8 +26,14 @@ class ConnectedToMollieController extends Controller
     {
         $user = $this->userLoader->load();
 
+        try {
+            $authLink = $this->authorizeService->getLink($user);
+        } catch (UserAlreadyConnectedToMollie $e) {
+            return redirect(route('payment_status'));
+        }
+
         return view('settings.payment.connect', [
-            'authLink' => $this->authorizeService->getLink($user),
+            'authLink' => $authLink
         ]);
     }
 }

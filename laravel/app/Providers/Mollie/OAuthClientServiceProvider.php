@@ -16,7 +16,7 @@ class OAuthClientServiceProvider extends ServiceProvider
             return new Mollie([
                 'clientId' => env('MOLLIE_CLIENT_ID'),
                 'clientSecret' => env('MOLLIE_CLIENT_SECRET'),
-                'redirectUri' => 'http://localhost/settings/payment/oauth/confirm',
+                'redirectUri' => env('APP_URL') . '/settings/payment/oauth/confirm',
                 'verify' => 'false',
             ]);
         });
