@@ -6,6 +6,7 @@ use App\Exceptions\UserNotConnectedToMollie;
 use App\MollieStatus;
 use App\Repositories\MollieAccessTokenRepository;
 use App\User;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 class StatusService
 {
@@ -23,6 +24,7 @@ class StatusService
 
     /**
      * @throws UserNotConnectedToMollie
+     * @throws IdentityProviderException
      */
     public function status(User $user)
     {

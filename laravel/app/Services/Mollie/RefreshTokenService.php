@@ -5,6 +5,7 @@ namespace App\Services\Mollie;
 use App\MollieAccessToken;
 use App\Repositories\MollieAccessTokenRepository;
 use App\Services\Clock;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
 
 class RefreshTokenService
@@ -28,6 +29,9 @@ class RefreshTokenService
         $this->clock = $clock;
     }
 
+    /**
+     * @throws IdentityProviderException
+     */
     public function refresh(MollieAccessToken $accessToken): void
     {
         $response = $this->mollieClient->getAccessToken('refresh_token', [

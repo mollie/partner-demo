@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers\Settings\Payment;
 
+use App\Exceptions\UserNotConnectedToMollie;
+use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\StatusService;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class StatusController
 {
     /** @var StatusService */
     private $service;
 
-    public function __construct(StatusService $service)
+    /** @var AuthenticatedUserLoader */
+    private $userLoader;
+
+    public function __construct(StatusService $service, AuthenticatedUserLoader $userLoader)
     {
         $this->service = $service;
+        $this->userLoader = $userLoader;
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
-        $user = Auth::user();
+        $user = $this->userLoader->load();
 
-        $status = $this->service->status($user);
+        try {
+            $status = $this->service->status($user);
+        } catch (UserNotConnectedToMollie $e) {
+            return redirect(route('connect_to_mollie'));
+        }
 
-        return view('settings.payment.status');
+        return view('settings.payment.status', $status);
     }
 }

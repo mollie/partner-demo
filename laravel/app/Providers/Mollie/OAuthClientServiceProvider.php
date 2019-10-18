@@ -22,6 +22,3 @@ class OAuthClientServiceProvider extends ServiceProvider
         });
     }
 }
-
-
-// http://localhost/settings/payment?code=auth_QNF3eE6BjxFqAufmCCpQVmAqbTaatH&state=78c4a218a9d73cec82b242b808d830e9
