@@ -2,10 +2,18 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use DateTime;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property int id
+ * @property string company_name
+ * @property string website
+ * @property string email
+ * @property DateTime created_at
+ * @property DateTime updated_at
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -26,14 +34,5 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 }
