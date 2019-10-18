@@ -1,9 +1,12 @@
-@extends('layouts.card', ['title' => __('Settings') .' / ' . __('Payment')])
+@extends('layouts.app', ['title' => __('Settings') .' / ' . __('Payment'),  'active' => 'settings'])
 
 @section('dashboard_content')
-    <div>
+        <h1>Activate payments</h1>
+        <h5>
+            Welcome to Mollie's Onboarding, {{ Auth::user()->company_name }}.<br/>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essen
+        </h5>
         <a href="{{ $authLink }}">
             <img alt="" src="https://assets.docs.mollie.com/_images/button-small@2x.png" height="50">
         </a>
-    </div>
 @endsection

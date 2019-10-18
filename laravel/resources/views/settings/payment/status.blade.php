@@ -1,4 +1,4 @@
-@extends('layouts.card', ['title' => __('Settings') .' / ' . __('Payment')])
+@extends('layouts.app', ['title' => __('Settings') .' / ' . __('Payment'), 'active' => 'settings'])
 
 @section('dashboard_content')
     <div>

@@ -8,7 +8,7 @@
  */
 
 :root {
-  --blue: #3490dc;
+  --blue: #1d2260;
   --indigo: #6574cd;
   --purple: #9561e2;
   --pink: #f66d9b;
@@ -21,7 +21,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #3490dc;
+  --primary: #1d2260;
   --secondary: #6c757d;
   --success: #38c172;
   --info: #6cb2eb;
@@ -4264,6 +4264,7 @@ input[type=button].btn-block {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
+  color: #1D2260;
 }
 
 .nav-link:hover,
@@ -4322,7 +4323,7 @@ input[type=button].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #3490dc;
+  background-color: #1d2260;
 }
 
 .nav-fill .nav-item {
@@ -6807,6 +6808,10 @@ button.bg-dark:focus {
 
 .bg-white {
   background-color: #fff !important;
+}
+
+.bg-blue {
+  background-color: #1d2260 !important;
 }
 
 .bg-transparent {
