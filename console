@@ -1,10 +1,11 @@
 #!/bin/bash
 
 set -a
+
+test -f .env || cp .env.sample .env
 source .env
 
 function _compose() {
-  test -f .env || cp .env.sample .env
   docker-compose -f docker-compose-dev.yml "$@"
 }
 
