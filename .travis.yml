@@ -14,7 +14,6 @@ before_install:
 
 install:
     - ./console upd
-    - test -f .env || cp .env.sample .env
     - ./console exec php-fpm composer install
 
 script:
