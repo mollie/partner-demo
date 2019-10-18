@@ -33,6 +33,6 @@ class MollieAccessToken extends Model
 
     public function isExpired(): bool
     {
-        return $this->expires_at->getTimestamp() > time();
+        return time() > $this->expires_at->getTimestamp();
     }
 }

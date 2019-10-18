@@ -2,9 +2,10 @@
 
 namespace App\Services\Mollie;
 
+use App\Exceptions\UserAlreadyConnectedToMollie;
 use App\Repositories\MollieAccessTokenRepository;
+use App\User;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
 
 class AuthorizationLinkService
@@ -24,13 +25,12 @@ class AuthorizationLinkService
     /**
      * @throws Exception
      */
-    public function getLink(): string
+    public function getLink(User $user): string
     {
-        $user = Auth::user();
         $accessToken = $this->repository->getUserAccessToken($user);
 
         if ($accessToken) {
-            throw new Exception('user is already connected');
+            throw new UserAlreadyConnectedToMollie($user);
         }
 
         return $this->mollieClient->getAuthorizationUrl();

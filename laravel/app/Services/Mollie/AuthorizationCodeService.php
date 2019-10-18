@@ -4,13 +4,12 @@ namespace App\Services\Mollie;
 
 use App\MollieAccessToken;
 use App\Repositories\MollieAccessTokenRepository;
-use App\Services\ClockService;
-use DateTime;
-use Illuminate\Support\Facades\Auth;
+use App\Services\Clock;
+use App\User;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
 
-class AccessTokenInitializationService
+class AuthorizationCodeService
 {
     /** @var MollieOAuthClient */
     private $mollieClient;
@@ -18,13 +17,13 @@ class AccessTokenInitializationService
     /** @var MollieAccessTokenRepository */
     private $repository;
 
-    /** @var ClockService */
+    /** @var Clock */
     private $clock;
 
     public function __construct(
         MollieOAuthClient $mollieClient,
         MollieAccessTokenRepository $repository,
-        ClockService $clock
+        Clock $clock
     ) {
         $this->mollieClient = $mollieClient;
         $this->repository = $repository;
@@ -34,17 +33,14 @@ class AccessTokenInitializationService
     /**
      * @throws IdentityProviderException
      */
-    public function initialize(string $code): void
+    public function authorize(string $code, User $user): void
     {
         $response = $this->mollieClient->getAccessToken('authorization_code', [
             'code' => $code,
         ]);
 
-        $date = new DateTime();
-        $date->setTimestamp($response->getExpires());
-
         $mollieAccessToken = new MollieAccessToken();
-        $mollieAccessToken->user_id = Auth::id();
+        $mollieAccessToken->user_id = $user->id;
         $mollieAccessToken->access_token = $response->getToken();
         $mollieAccessToken->refresh_token = $response->getRefreshToken();
         $mollieAccessToken->expires_at = $this->clock->createFromTimestamp($response->getExpires());

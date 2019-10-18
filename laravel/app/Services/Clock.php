@@ -4,7 +4,7 @@ namespace App\Services;
 
 use DateTime;
 
-class ClockService
+class Clock
 {
     public function now(): DateTime
     {

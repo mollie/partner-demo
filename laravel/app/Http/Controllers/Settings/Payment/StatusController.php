@@ -2,37 +2,25 @@
 
 namespace App\Http\Controllers\Settings\Payment;
 
-use App\Repositories\MollieAccessTokenRepository;
-use App\Services\Mollie\RefreshTokenService;
+use App\Services\Mollie\StatusService;
 use Illuminate\Support\Facades\Auth;
 
 class StatusController
 {
-    /** @var MollieAccessTokenRepository */
-    private $repository;
+    /** @var StatusService */
+    private $service;
 
-    /** @var RefreshTokenService */
-    private $refreshTokenService;
-
-    public function __construct(MollieAccessTokenRepository $repository, RefreshTokenService $refreshTokenService)
+    public function __construct(StatusService $service)
     {
-        $this->repository = $repository;
-        $this->refreshTokenService = $refreshTokenService;
+        $this->service = $service;
     }
 
     public function __invoke()
     {
         $user = Auth::user();
-        $accessToken = $this->repository->getUserAccessToken($user);
 
-        if ($accessToken->isExpired()) {
-            $this->refreshTokenService->refresh($accessToken);
-        }
+        $status = $this->service->status($user);
 
         return view('settings.payment.status');
-
-        // Call status API
-
-        // Based on status switch context
     }
 }

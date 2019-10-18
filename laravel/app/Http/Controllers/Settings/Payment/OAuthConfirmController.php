@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers\Settings\Payment;
 
-use App\Services\Mollie\AccessTokenInitializationService;
+use App\Services\Mollie\AuthorizationCodeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OAuthConfirmController
 {
-    /** @var AccessTokenInitializationService */
+    /** @var AuthorizationCodeService */
     private $initializationService;
 
-    public function __construct(AccessTokenInitializationService $initializationService)
+    public function __construct(AuthorizationCodeService $initializationService)
     {
         $this->initializationService = $initializationService;
     }
 
     public function __invoke(Request $request): RedirectResponse
     {
-        $this->initializationService->initialize($request->get('code'));
+        $user = Auth::user();
+
+        $this->initializationService->authorize($request->get('code'), $user);
 
         return redirect(route('payment_status'));
     }

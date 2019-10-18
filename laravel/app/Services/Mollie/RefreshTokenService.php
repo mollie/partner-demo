@@ -4,7 +4,7 @@ namespace App\Services\Mollie;
 
 use App\MollieAccessToken;
 use App\Repositories\MollieAccessTokenRepository;
-use App\Services\ClockService;
+use App\Services\Clock;
 use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
 
 class RefreshTokenService
@@ -15,13 +15,13 @@ class RefreshTokenService
     /** @var MollieAccessTokenRepository */
     private $repository;
 
-    /** @var ClockService */
+    /** @var Clock */
     private $clock;
 
     public function __construct(
         MollieOAuthClient $mollieClient,
         MollieAccessTokenRepository $repository,
-        ClockService $clock
+        Clock $clock
     ) {
         $this->mollieClient = $mollieClient;
         $this->repository = $repository;
