@@ -8,6 +8,8 @@ use App\Repositories\MollieAccessTokenRepository;
 use App\Services\Mollie\AuthorizationLinkService;
 use App\User;
 use Mollie\OAuth2\Client\Provider\Mollie;
+use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
@@ -48,8 +50,19 @@ class AuthorizationLinkServiceTest extends TestCase
         $this->mollieClient
             ->expects($this->once())
             ->method('getAuthorizationUrl')
+            ->with(["scope" => $this->expectedScopes()])
             ->willReturn(self::MOLLIE_URL);
 
         $this->service->getLink(new User());
+    }
+
+    private function expectedScopes(): array
+    {
+        return [
+            MollieOAuthClient::SCOPE_ONBOARDING_READ,
+            MollieOAuthClient::SCOPE_ONBOARDING_WRITE,
+            MollieOAuthClient::SCOPE_ORGANIZATIONS_READ,
+            MollieOAuthClient::SCOPE_ORGANIZATIONS_WRITE,
+        ];
     }
 }
