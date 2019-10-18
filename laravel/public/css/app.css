@@ -2562,8 +2562,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #3490dc;
-  border-color: #3490dc;
+  background-color: #1d2260;
+  border-color: #1d2260;
 }
 
 .btn-primary:hover {
@@ -10649,3 +10649,6 @@ a.text-dark:focus {
   }
 }
 
+.logo {
+    max-height: 45px;
+}
