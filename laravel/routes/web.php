@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['not_connected_to_mollie'])->group(function () {
         Route::get(
             'settings/payment/connect-to-mollie',
-            'Settings\Payment\ConnectedToMollieController'
+            'Settings\Payment\ConnectToMollieController'
         )->name('connect_to_mollie');
     });
 
