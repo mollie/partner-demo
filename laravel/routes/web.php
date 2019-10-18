@@ -22,9 +22,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function () {
 
     Route::get(
-        'settings/payment/oauth/confirm',
+        'settings/payment/oauth/return',
+        'Settings\Payment\ReturnFromMollieController'
+    )->name('return_from_mollie');
+
+    Route::get(
+        'settings/payment/oauth/confirm/{authCode}',
         'Settings\Payment\OAuthConfirmController'
     )->name('oauth_confirm');
+
+    Route::get(
+        'settings/payment/oauth/error/{errorType}',
+        'Settings\Payment\OAuthErrorController'
+    )->name('oauth_error');
 
     Route::middleware(['not_connected_to_mollie'])->group(function () {
         Route::get(
