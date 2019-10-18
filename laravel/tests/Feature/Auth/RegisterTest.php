@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -74,8 +73,8 @@ class RegisterTest extends TestCase
                 'expected' => ['password' => ['The password field is required.']],
             ],
             'short password' => [
-                'postData' => array_merge($this->postData, ['password' => '123', 'password_confirmation' => '123']),
-                'expected' => ['password' => ['The password must be at least 8 characters.']],
+                'postData' => array_merge($this->postData, ['password' => '12', 'password_confirmation' => '12']),
+                'expected' => ['password' => ['The password must be at least 3 characters.']],
             ],
             'empty password_confirmation' => [
                 'postData' => array_merge($this->postData, ['password_confirmation' => '']),
@@ -88,17 +87,11 @@ class RegisterTest extends TestCase
     {
         $this->post('/register', $this->postData);
 
-        /** @var User $user */
-        $user = User::where('email', 'info@mollie.com')->first();
-        $user->addHidden(['created_at', 'updated_at']);
-        $this->assertEquals(
-            [
-                'id' => 1,
-                'company_name' => 'Mollie B.V',
-                'website' => 'https://www.mollie.com/en/',
-                'email' => 'info@mollie.com'
-            ],
-            $user->toArray()
-        );
+        $this->assertDatabaseHas('users', [
+            'id' => 1,
+            'company_name' => 'Mollie B.V',
+            'website' => 'https://www.mollie.com/en/',
+            'email' => 'info@mollie.com',
+        ]);
     }
 }

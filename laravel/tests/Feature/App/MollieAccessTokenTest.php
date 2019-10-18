@@ -4,29 +4,28 @@ namespace Tests\Feature\App;
 
 use App\MollieAccessToken;
 use DateTime;
-use stdClass;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use TypeError;
 
 class MollieAccessTokenTest extends TestCase
 {
-    private const DATETIME = '2019-10-01 08:02:29';
+    use RefreshDatabase;
 
-    public function testWhenAssignExpiresAtWithInvalidValueThenThrowError(): void
+    public function testWhenExpiresAtHasADateBeforeTodayThenIsExpiredIsTrue(): void
     {
-        $mollieAccessToken = new MollieAccessToken();
+        $expiresAt = new DateTime('2018-12-31 08:02:29');
 
-        $this->expectException(TypeError::class);
+        $accessToken = new MollieAccessToken(['expires_at' => $expiresAt]);
 
-        $mollieAccessToken->expires_at = new stdClass();
+        $this->assertTrue($accessToken->isExpired());
     }
 
-    public function testWhenGivenAValidValueToExpiresAtThenAssignToObject(): void
+    public function testWhenExpiresAtHasADateAfterTodayThenIsExpiredIsFalse(): void
     {
-        $mollieAccessToken = new MollieAccessToken();
+        $expiresAt = new DateTime('2019-02-01 08:02:29');
 
-        $mollieAccessToken->expires_at = new DateTime(self::DATETIME);
+        $accessToken = new MollieAccessToken(['expires_at' => $expiresAt]);
 
-        $this->assertEquals(['expires_at' => self::DATETIME], $mollieAccessToken->toArray());
+        $this->assertFalse($accessToken->isExpired());
     }
 }

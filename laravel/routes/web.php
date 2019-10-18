@@ -20,5 +20,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('settings', 'Settings\Payment\IndexController')->name('settings_payment');
+
+    Route::get(
+        'settings/payment/oauth/confirm',
+        'Settings\Payment\OAuthConfirmController'
+    )->name('oauth_confirm');
+
+    Route::middleware(['not_connected_to_mollie'])->group(function () {
+        Route::get(
+            'settings/payment/connect-to-mollie',
+            'Settings\Payment\ConnectedToMollieController'
+        )->name('connect_to_mollie');
+    });
+
+    Route::middleware(['connected_to_mollie'])->group(function () {
+        Route::get(
+            'settings/payment',
+            'Settings\Payment\StatusController'
+        )->name('payment_status');
+    });
 });

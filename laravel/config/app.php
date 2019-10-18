@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\Mollie\OAuthClientServiceProvider::class,
 
         /*
          * Application Service Providers...

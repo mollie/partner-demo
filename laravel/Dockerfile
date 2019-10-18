@@ -12,7 +12,6 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 COPY ./ /var/www/html/
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    composer install --no-scripts
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 ENTRYPOINT ["./entrypoint-dev"]

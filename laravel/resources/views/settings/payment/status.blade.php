@@ -1,5 +1,7 @@
 @extends('layouts.card', ['title' => __('Settings') .' / ' . __('Payment')])
 
 @section('dashboard_content')
-    Payments
+    <div>
+        Congratulations, You are already connected to Mollie :)
+    </div>
 @endsection
