@@ -20,10 +20,6 @@ use App\Http\Controllers\Settings\Payment\StatusController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('app');
-});
-
 Route::namespace('App\Http\Controllers')->group(function () {
     Auth::routes();
 });
@@ -31,6 +27,10 @@ Route::namespace('App\Http\Controllers')->group(function () {
 Route::get('/home', HomeController::class)->name('home');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect(route('home'));
+    });
+
     Route::get('settings/payment/oauth/return', ReturnFromMollieController::class)->name('return_from_mollie');
 
     Route::get('settings/payment/oauth/confirm/{authCode}', OAuthConfirmController::class)->name('oauth_confirm');
