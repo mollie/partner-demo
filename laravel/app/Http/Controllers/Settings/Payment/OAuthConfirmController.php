@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Settings\Payment;
 use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\AuthorizationCodeService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class OAuthConfirmController
 {
