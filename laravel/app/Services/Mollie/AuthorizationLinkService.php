@@ -33,6 +33,18 @@ class AuthorizationLinkService
             throw new UserAlreadyConnectedToMollie($user);
         }
 
-        return $this->mollieClient->getAuthorizationUrl();
+        return $this->mollieClient->getAuthorizationUrl([
+            "scope" => $this->getRequiredScopes()
+        ]);
+    }
+
+    private function getRequiredScopes(): array
+    {
+        return [
+            MollieOAuthClient::SCOPE_ONBOARDING_READ,
+            MollieOAuthClient::SCOPE_ONBOARDING_WRITE,
+            MollieOAuthClient::SCOPE_ORGANIZATIONS_READ,
+            MollieOAuthClient::SCOPE_ORGANIZATIONS_WRITE,
+        ];
     }
 }
