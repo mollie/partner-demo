@@ -93,7 +93,7 @@ a {
 }
 
 a:hover {
-    color: #1d68a7;
+    color: #07f;
     text-decoration: underline;
 }
 
@@ -1089,8 +1089,8 @@ pre {
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #227dc7;
-    border-color: #2176bd;
+    background-color: #07f;
+    border-color: #07f;
 }
 
 .btn-primary:focus {
@@ -1176,7 +1176,7 @@ pre {
 }
 
 .btn-link:hover {
-    color: #1d68a7;
+    color: #07f;
     text-decoration: underline;
 }
 
@@ -3179,4 +3179,8 @@ a.text-dark:hover, a.text-dark:focus {
 
 .dashboard_content {
     max-width: 900px;
+}
+
+.dropdown-menu.show {
+    display: block;
 }
