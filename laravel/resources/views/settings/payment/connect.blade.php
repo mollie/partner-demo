@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Settings') .' / ' . __('Payment'),  'active' => 'settings'])
+@extends('app', ['title' => __('Settings') .' / ' . __('Payment'),  'active' => 'settings'])
 
 @section('dashboard_content')
         <h1>Activate payments</h1>

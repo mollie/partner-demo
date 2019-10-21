@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Welcome'), 'active' => 'home'])
+@extends('app', ['title' => __('Welcome'), 'active' => 'home'])
 
 @section('dashboard_content')
     <h1>Welcome to Mollie</h1>

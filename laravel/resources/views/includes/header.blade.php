@@ -12,6 +12,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item flex-center">
+                    <a href="https://docs.mollie.com/reference/v2/payments-api/create-payment" target="_blank">
+                        <img src="images/docs.svg" class="nav-link"/>
+                    </a>
+                </li>
+                <li class="nav-item flex-center">
+                    <a href="https://github.com/mollie/partner-demo" target="_blank">
+                        <img src="images/github.svg" class="nav-link"/>
+                    </a>
+                </li>
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
