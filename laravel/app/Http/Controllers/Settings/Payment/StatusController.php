@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Settings\Payment;
 use App\Exceptions\UserNotConnectedToMollie;
 use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\StatusService;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class StatusController
 {
@@ -21,7 +22,10 @@ class StatusController
         $this->userLoader = $userLoader;
     }
 
-    public function __invoke(): Response
+    /**
+     * @return RedirectResponse|View
+     */
+    public function __invoke()
     {
         $user = $this->userLoader->load();
 
@@ -31,6 +35,8 @@ class StatusController
             return redirect(route('connect_to_mollie'));
         }
 
-        return view('settings.payment.status', $status);
+        return view('settings.payment.status', [
+            'status' => $status,
+        ]);
     }
 }

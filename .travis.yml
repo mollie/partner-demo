@@ -13,14 +13,16 @@ before_install:
     - alias md5="md5sum"
 
 install:
-    - ./console upd
-    - ./console exec php-fpm composer install
+    - ./console _compose build
+    - ./console _compose up --detach
+    - ./console _compose exec php-fpm composer install
 
 script:
-    - ./console tests
+    - ./console _compose exec php-fpm composer run tests
 
 after_failure:
     - ./console logs
 
 after_script:
-    - ./console down
+    - ./console _compose down
+#    - push docker image
