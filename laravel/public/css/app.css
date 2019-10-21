@@ -78,6 +78,10 @@ ul ul {
     margin-bottom: 0;
 }
 
+li {
+    list-style: none;
+}
+
 b, strong {
     font-weight: bolder;
 }
@@ -3178,9 +3182,41 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .dashboard_content {
-    max-width: 900px;
+    max-width: 1200px;
+    justify-content: space-between;
+}
+
+.text-content {
+    max-width: 800px;
 }
 
 .dropdown-menu.show {
     display: block;
+}
+
+.text-content {
+    flex: 1;
+}
+
+.payment-methods {
+
+}
+
+.status::before {
+    margin-right: 8px;
+    margin-left: 0;
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-left: 8px;
+    border-radius: 50%;
+}
+
+.status-green::before {
+    background: #4cd964;
+}
+
+.status-yellow::before {
+    background: #4cd964;
 }
