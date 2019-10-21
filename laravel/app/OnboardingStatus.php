@@ -3,9 +3,9 @@
 namespace App;
 
 use Mollie\Api\Resources\Onboarding;
-use Mollie\Api\Types\OnboardingStatus;
+use Mollie\Api\Types\OnboardingStatus as OnboardingEnum;
 
-class MollieStatus
+class OnboardingStatus
 {
     /**
      * @var string
@@ -69,17 +69,17 @@ class MollieStatus
 
     private function needsData(): bool
     {
-        return $this->status === OnboardingStatus::NEEDS_DATA;
+        return $this->status === OnboardingEnum::NEEDS_DATA;
     }
 
     private function inReview(): bool
     {
-        return $this->status === OnboardingStatus::IN_REVIEW;
+        return $this->status === OnboardingEnum::IN_REVIEW;
     }
 
     private function isCompleted(): bool
     {
-        return $this->status === OnboardingStatus::COMPLETED;
+        return $this->status === OnboardingEnum::COMPLETED;
     }
 
     public function getDashboardLink(): string

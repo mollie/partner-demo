@@ -30,7 +30,7 @@ class StatusController
         $user = $this->userLoader->load();
 
         try {
-            $status = $this->service->getMollieStatus($user);
+            $status = $this->service->getOnboardingStatus($user);
         } catch (UserNotConnectedToMollie $e) {
             return redirect(route('connect_to_mollie'));
         }

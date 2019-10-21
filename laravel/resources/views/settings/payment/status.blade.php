@@ -2,7 +2,7 @@
 
 @section('dashboard_content')
 
-    <?php /** @var App\MollieStatus $status */ ?>
+    <?php /** @var App\OnboardingStatus $status */ ?>
 
     @if($status->paymentsAreDisabledBecauseMollieNeedsMoreData())
 

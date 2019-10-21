@@ -4,7 +4,7 @@ namespace Tests\Feature\Services\Mollie;
 
 use App\Exceptions\UserNotConnectedToMollie;
 use App\MollieAccessToken;
-use App\MollieStatus;
+use App\OnboardingStatus;
 use App\Repositories\MollieAccessTokenRepository;
 use App\Services\Mollie\RefreshTokenService;
 use App\Services\Mollie\StatusService;
@@ -76,6 +76,6 @@ class StatusServiceTest extends TestCase
 
         $status = $this->service->status(new User());
 
-        $this->assertEquals(new MollieStatus($accessToken), $status);
+        $this->assertEquals(new OnboardingStatus($accessToken), $status);
     }
 }
