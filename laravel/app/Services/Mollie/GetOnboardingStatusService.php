@@ -3,8 +3,8 @@
 namespace App\Services\Mollie;
 
 use App\Factories\MollieApiClientFactory;
+use App\OnboardingStatus;
 use App\User;
-use Mollie\Api\Resources\Onboarding;
 
 class GetOnboardingStatusService
 {
@@ -18,10 +18,17 @@ class GetOnboardingStatusService
         $this->apiClientFactory = $apiClientFactory;
     }
 
-    public function getOnboardingStatus(User $user): Onboarding
+    public function getOnboardingStatus(User $user): OnboardingStatus
     {
         $apiClient = $this->apiClientFactory->createForUser($user);
 
-        return $apiClient->onboarding->get();
+        $onboardingResponse = $apiClient->onboarding->get();
+
+        return new OnboardingStatus(
+            $onboardingResponse->status,
+            $onboardingResponse->canReceivePayments,
+            $onboardingResponse->canReceiveSettlements,
+            $onboardingResponse->_links->dashboard->href
+        );
     }
 }

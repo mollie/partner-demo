@@ -48,8 +48,6 @@ class StatusService
             $this->refreshTokenService->refresh($accessToken);
         }
 
-        $onboardingStatus = $this->onboardingStatusService->getOnboardingStatus($user);
-
-        return OnboardingStatus::fromOnboardingApiResponse($onboardingStatus);
+        return $this->onboardingStatusService->getOnboardingStatus($user);
     }
 }

@@ -24,22 +24,12 @@ class OnboardingStatus
      */
     private $dashboardLink;
 
-    private function __construct(string $status, bool $canReceivePayments, bool $canReceiveSettlements, string $onboardingLink)
+    public function __construct(string $status, bool $canReceivePayments, bool $canReceiveSettlements, string $onboardingLink)
     {
         $this->status = $status;
         $this->canReceivePayments = $canReceivePayments;
         $this->canReceiveSettlements = $canReceiveSettlements;
         $this->dashboardLink = $onboardingLink;
-    }
-
-    public static function fromOnboardingApiResponse(Onboarding $onboardingResponse): self
-    {
-        return new self(
-            $onboardingResponse->status,
-            $onboardingResponse->canReceivePayments,
-            $onboardingResponse->canReceiveSettlements,
-            $onboardingResponse->_links->dashboard->href
-        );
     }
 
     public function paymentsAreDisabledBecauseMollieNeedsMoreData(): bool
