@@ -624,8 +624,6 @@ pre code {
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
 }
 
 .no-gutters {
@@ -3244,10 +3242,13 @@ input[type=button].btn-block {
 .dropdown,
 .dropleft {
     position: relative;
+    max-width: 175px;
 }
 
 .dropdown-toggle {
     white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 
 .dropdown-toggle::after {
@@ -4475,47 +4476,45 @@ input[type=button].btn-block {
     }
 }
 
-@media (max-width: 767.98px) {
-    .navbar-expand-md > .container,
-    .navbar-expand-md > .container-fluid {
-        padding-right: 0;
-        padding-left: 0;
-    }
+.navbar-expand-md > .container,
+.navbar-expand-md > .container-fluid {
+    padding-right: 0;
+    padding-left: 0;
 }
 
-@media (min-width: 768px) {
-    .navbar-expand-md {
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-    }
 
-    .navbar-expand-md .navbar-nav {
-        flex-direction: row;
-    }
-
-    .navbar-expand-md .navbar-nav .dropdown-menu {
-        position: absolute;
-    }
-
-    .navbar-expand-md .navbar-nav .nav-link {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-    }
-
-    .navbar-expand-md > .container,
-    .navbar-expand-md > .container-fluid {
-        flex-wrap: nowrap;
-    }
-
-    .navbar-expand-md .navbar-collapse {
-        display: flex !important;
-        flex-basis: auto;
-    }
-
-    .navbar-expand-md .navbar-toggler {
-        display: none;
-    }
+.navbar-expand-md {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
 }
+
+.navbar-expand-md .navbar-nav {
+    flex-direction: row;
+}
+
+.navbar-expand-md .navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+.navbar-expand-md .navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.navbar-expand-md > .container,
+.navbar-expand-md > .container-fluid {
+    flex-wrap: nowrap;
+}
+
+.navbar-expand-md .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+}
+
+.navbar-expand-md .navbar-toggler {
+    display: none;
+}
+
 
 @media (max-width: 991.98px) {
     .navbar-expand-lg > .container,
