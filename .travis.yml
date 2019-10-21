@@ -24,4 +24,5 @@ after_failure:
     - ./console logs
 
 after_script:
-    - ./console down
+    - ./console _compose down
+#    - push docker image
