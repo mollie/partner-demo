@@ -28,9 +28,9 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Auth::routes();
 });
 
-Route::get('/home', HomeController::class)->name('home');
-
 Route::middleware(['auth'])->group(function () {
+    Route::get('/home', HomeController::class)->name('home');
+
     Route::get('settings/payment/oauth/return', ReturnFromMollieController::class)->name('return_from_mollie');
 
     Route::get('settings/payment/oauth/confirm/{authCode}', OAuthConfirmController::class)->name('oauth_confirm');
