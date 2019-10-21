@@ -9,7 +9,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
-    --blue: #1d2260;
+    --blue: #003774;
     --indigo: #6574cd;
     --purple: #9561e2;
     --pink: #f66d9b;
@@ -22,7 +22,7 @@
     --white: #fff;
     --gray: #6c757d;
     --gray-dark: #343a40;
-    --primary: #1d2260;
+    --primary: #003774;
     --secondary: #6c757d;
     --success: #38c172;
     --info: #6cb2eb;
@@ -2561,8 +2561,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #1d2260;
-    border-color: #1d2260;
+    background-color: #003774;
+    border-color: #003774;
 }
 
 .btn-primary:hover {
@@ -4266,7 +4266,7 @@ input[type=button].btn-block {
 .nav-link {
     display: block;
     padding: 0.5rem 1rem;
-    color: #1D2260;
+    color: #003774;
 }
 
 .nav-link:hover,
@@ -4325,7 +4325,7 @@ input[type=button].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
     color: #fff;
-    background-color: #1d2260;
+    background-color: #003774;
 }
 
 .nav-fill .nav-item {
@@ -6807,7 +6807,7 @@ button.bg-dark:focus {
 }
 
 .bg-blue {
-    background-color: #1d2260 !important;
+    background-color: #003774 !important;
 }
 
 .bg-transparent {
