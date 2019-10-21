@@ -27,6 +27,6 @@ class OAuthConfirmController
 
         $this->initializationService->authorize($authCode, $user);
 
-        return redirect(route('payment_status'));
+        return redirect(route('oauth_authorized_redirect'));
     }
 }
