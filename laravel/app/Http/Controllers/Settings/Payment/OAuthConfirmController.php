@@ -21,11 +21,11 @@ class OAuthConfirmController
         $this->userLoader = $userLoader;
     }
 
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(string $authCode): RedirectResponse
     {
         $user = $this->userLoader->load();
 
-        $this->initializationService->authorize($request->get('code'), $user);
+        $this->initializationService->authorize($authCode, $user);
 
         return redirect(route('payment_status'));
     }
