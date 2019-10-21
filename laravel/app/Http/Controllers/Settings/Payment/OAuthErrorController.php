@@ -27,14 +27,14 @@ class OAuthErrorController
     {
         try {
             $this->parserError($errorType);
-        } catch (UserDeniedAccessToMollie | Exception $e) {
+        } catch (UserDeniedAccessToMollie $e) {
             return redirect(url('home'))
                 ->withErrors([
                     'message' => $e->getMessage(),
                 ]);
         }
 
-        return redirect(url('home'));
+        throw new Exception('Unknown Error');
     }
 
     /**
@@ -46,7 +46,5 @@ class OAuthErrorController
         if ($errorType === self::MOLLIE_ACCESS_DENIED) {
             throw new UserDeniedAccessToMollie($this->userLoader->load());
         }
-
-        throw new Exception('Unknown Error');
     }
 }

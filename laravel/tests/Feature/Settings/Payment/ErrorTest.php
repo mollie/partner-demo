@@ -4,6 +4,7 @@ namespace Tests\Feature\Settings\Payment;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -31,16 +32,12 @@ class ErrorTest extends TestCase
             ]);
     }
 
-    public function testWhenResponseHasUnknownErrorThenRedirectToHomeWithUnknownError(): void
+    public function testWhenResponseHasUnknownErrorThenThrowError500(): void
     {
         $errorType = 'random_error';
 
         $response = $this->json('GET', sprintf('settings/payment/oauth/error/%s', $errorType));
 
-        $response
-            ->assertRedirect(url('home'))
-            ->assertSessionHasErrors([
-                'message' => 'Unknown Error',
-            ]);
+        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
