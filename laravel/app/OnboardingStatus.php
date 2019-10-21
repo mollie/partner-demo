@@ -3,9 +3,9 @@
 namespace App;
 
 use Mollie\Api\Resources\Onboarding;
-use Mollie\Api\Types\OnboardingStatus;
+use Mollie\Api\Types\OnboardingStatus as OnboardingEnum;
 
-class MollieStatus
+class OnboardingStatus
 {
     /**
      * @var string
@@ -24,22 +24,12 @@ class MollieStatus
      */
     private $dashboardLink;
 
-    private function __construct(string $status, bool $canReceivePayments, bool $canReceiveSettlements, string $onboardingLink)
+    public function __construct(string $status, bool $canReceivePayments, bool $canReceiveSettlements, string $onboardingLink)
     {
         $this->status = $status;
         $this->canReceivePayments = $canReceivePayments;
         $this->canReceiveSettlements = $canReceiveSettlements;
         $this->dashboardLink = $onboardingLink;
-    }
-
-    public static function fromOnboardingApiResponse(Onboarding $onboardingResponse): self
-    {
-        return new self(
-            $onboardingResponse->status,
-            $onboardingResponse->canReceivePayments,
-            $onboardingResponse->canReceiveSettlements,
-            $onboardingResponse->_links->dashboard->href
-        );
     }
 
     public function paymentsAreDisabledBecauseMollieNeedsMoreData(): bool
@@ -69,17 +59,17 @@ class MollieStatus
 
     private function needsData(): bool
     {
-        return $this->status === OnboardingStatus::NEEDS_DATA;
+        return $this->status === OnboardingEnum::NEEDS_DATA;
     }
 
     private function inReview(): bool
     {
-        return $this->status === OnboardingStatus::IN_REVIEW;
+        return $this->status === OnboardingEnum::IN_REVIEW;
     }
 
     private function isCompleted(): bool
     {
-        return $this->status === OnboardingStatus::COMPLETED;
+        return $this->status === OnboardingEnum::COMPLETED;
     }
 
     public function getDashboardLink(): string

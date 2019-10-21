@@ -37,8 +37,12 @@ function logs() { ### Show container logs - ./console logs [php-fpm|mysql]
   _compose_dev logs ${1:-}
 }
 
-function artisan() { ### Execute artisan command on php-fpm container - ./console exec php-fpm|mysql command [command [command [...]]]
+function artisan() { ### Execute artisan command on php-fpm container - ./console artisan command [command [command [...]]]
   _compose_dev exec php-fpm php artisan "$@"
+}
+
+function composer() { ### Execute composer command on php-fpm container - ./console composer command [command [command [...]]]
+  _compose_dev exec php-fpm composer "$@"
 }
 
 function exec() { ### Execute bash command on container - ./console exec php-fpm|mysql command [command [command [...]]]
