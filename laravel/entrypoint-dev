@@ -4,6 +4,6 @@ set -e
 
 # if there are migrations to run
 ./wait-for "${DB_HOST}:${DB_PORT}" -- \
-  php artisan migrate
+  composer install ; php artisan migrate
 
 php artisan serve --port=80 --host=0.0.0.0

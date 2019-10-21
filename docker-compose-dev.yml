@@ -9,32 +9,8 @@ services:
             MYSQL_DATABASE: ${DB_DATABASE}
         ports:
             - ${DB_PORT}:${DB_PORT}
-
     php-fpm:
-        image: ${IMAGE_NAME}/laravel-app
-        build:
-            context: ./laravel
-        volumes:
-            - .bashrc:/root/.bashrc
-            - ./laravel:/var/www/html
         links:
             - mysql
-        environment:
-            DB_HOST: ${DB_HOST}
-            DB_PORT: ${DB_PORT}
-            DB_DATABASE: ${DB_DATABASE}
-            DB_USERNAME: ${DB_USERNAME}
-            DB_PASSWORD: ${DB_PASSWORD}
-            DB_CONNECTION: ${DB_CONNECTION}
-            APP_NAME: ${APP_NAME}
-            APP_ENV: ${APP_ENV}
-            APP_KEY: ${APP_KEY}
-            APP_DEBUG: ${APP_DEBUG}
-            APP_URL: ${APP_URL}
-            MOLLIE_KEY: ${MOLLIE_KEY}
-            MOLLIE_CLIENT_ID: ${MOLLIE_CLIENT_ID}
-            MOLLIE_CLIENT_SECRET: ${MOLLIE_CLIENT_SECRET}
-        ports:
-            - ${APP_PORT}:80
         entrypoint:
             './entrypoint-dev'
