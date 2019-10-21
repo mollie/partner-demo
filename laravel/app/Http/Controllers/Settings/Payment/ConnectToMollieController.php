@@ -29,7 +29,8 @@ class ConnectToMollieController extends Controller
         try {
             $authLink = $this->authorizeService->getLink($user);
         } catch (UserAlreadyConnectedToMollie $e) {
-            return redirect(route('payment_status'));
+            return redirect(route('payment_status'))
+                ->with('message', $e->getMessage());
         }
 
         return view('settings.payment.connect', [
