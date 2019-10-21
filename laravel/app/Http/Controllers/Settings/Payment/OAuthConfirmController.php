@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings\Payment;
 use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\AuthorizationCodeService;
 use Illuminate\Http\RedirectResponse;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 class OAuthConfirmController
 {
@@ -24,7 +25,14 @@ class OAuthConfirmController
     {
         $user = $this->userLoader->load();
 
-        $this->initializationService->authorize($authCode, $user);
+        try {
+            $this->initializationService->authorize($authCode, $user);
+        } catch (IdentityProviderException $e) {
+            return redirect(route('payment_status'))->withErrors([
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+            ]);
+        }
 
         return redirect(route('payment_status'));
     }
