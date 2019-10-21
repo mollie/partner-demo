@@ -1,16 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Feature\App;
+namespace Tests\Unit\App;
 
 use App\MollieAccessToken;
 use DateTime;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MollieAccessTokenTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testWhenExpiresAtHasADateBeforeTodayThenIsExpiredIsTrue(): void
     {
         $expiresAt = new DateTime('2018-12-31 08:02:29');

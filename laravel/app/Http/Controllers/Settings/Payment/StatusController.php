@@ -7,6 +7,7 @@ use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\StatusService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 class StatusController
 {
@@ -24,6 +25,7 @@ class StatusController
 
     /**
      * @return RedirectResponse|View
+     * @throws IdentityProviderException
      */
     public function __invoke()
     {

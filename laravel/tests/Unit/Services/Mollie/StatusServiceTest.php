@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Feature\Services\Mollie;
+namespace Tests\Unit\Services\Mollie;
 
 use App\Exceptions\UserNotConnectedToMollie;
 use App\MollieAccessToken;

@@ -6,11 +6,6 @@ use DateTime;
 
 class Clock
 {
-    public function now(): DateTime
-    {
-        return new DateTime();
-    }
-
     public function createFromTimestamp(int $timestamp): DateTime
     {
         $date = new DateTime();
