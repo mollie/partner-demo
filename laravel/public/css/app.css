@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,900);
 
 @charset "UTF-8";
 
@@ -35,7 +35,6 @@
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
-    --font-family-sans-serif: "Roboto", sans-serif;
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -67,7 +66,7 @@ section {
 
 body {
     margin: 0;
-    font-family: "Nunito", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.6;
@@ -4790,7 +4789,7 @@ input[type=button].btn-block {
 }
 
 .card-header {
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem 1rem;
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.03);
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -6262,7 +6261,7 @@ a.close.disabled {
     z-index: 1060;
     display: block;
     max-width: 276px;
-    font-family: "Nunito", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-style: normal;
     font-weight: 400;
     line-height: 1.6;
@@ -10656,8 +10655,18 @@ a.text-dark:focus {
     justify-content: center;
 }
 
-@media(max-width: 768px) {
+@media (max-width: 768px) {
     .d-none-sm {
         display: none;
     }
+}
+
+@media (min-width: 768px) {
+    #sidebar {
+        max-width: 300px;
+    }
+}
+
+.dashboard_content {
+    max-width: 900px;
 }
