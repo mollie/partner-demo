@@ -3,7 +3,8 @@
 namespace App\Services\Mollie;
 
 use App\Exceptions\UserNotConnectedToMollie;
-use App\MollieStatus;
+use App\Factories\MollieApiClientFactory;
+use App\OnboardingStatus;
 use App\Repositories\MollieAccessTokenRepository;
 use App\User;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
@@ -16,17 +17,26 @@ class StatusService
     /** @var RefreshTokenService */
     private $refreshTokenService;
 
-    public function __construct(MollieAccessTokenRepository $repository, RefreshTokenService $refreshTokenService)
-    {
+    /**
+     * @var GetOnboardingStatusService
+     */
+    private $onboardingStatusService;
+
+    public function __construct(
+        MollieAccessTokenRepository $repository,
+        RefreshTokenService $refreshTokenService,
+        GetOnboardingStatusService $onboardingStatusService
+    ) {
         $this->repository = $repository;
         $this->refreshTokenService = $refreshTokenService;
+        $this->onboardingStatusService = $onboardingStatusService;
     }
 
     /**
      * @throws UserNotConnectedToMollie
      * @throws IdentityProviderException
      */
-    public function status(User $user)
+    public function getOnboardingStatus(User $user): OnboardingStatus
     {
         $accessToken = $this->repository->getUserAccessToken($user);
 
@@ -38,10 +48,6 @@ class StatusService
             $this->refreshTokenService->refresh($accessToken);
         }
 
-        // Call status API
-
-        // Based on status switch context
-
-        return new MollieStatus($accessToken);
+        return $this->onboardingStatusService->getOnboardingStatus($user);
     }
 }
