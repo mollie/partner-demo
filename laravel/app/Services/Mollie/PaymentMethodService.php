@@ -24,16 +24,29 @@ class PaymentMethodService
     public function loadFromProfile(User $user, PaymentProfile $profile): array
     {
         $client = $this->clientFactory->createForUser($user);
+        $methods = [];
 
-        $methods = iterator_to_array($client->methods->allAvailable(['profileId' => $profile->getId()]));
+        $methodsAvailable = $client->methods->allAvailable(['profileId' => $profile->getId()]);
+        $methodsEnabled = $client->methods->allActive(['profileId' => $profile->getId()]);
 
-        return array_map(function (Method $method): PaymentMethod {
-            return new PaymentMethod(
-                $method->id,
-                $method->description,
-                $method->image->svg,
-                (bool) array_rand([0, 1])
-            );
-        }, $methods);
+        foreach ($methodsAvailable as $method) {
+            $methods[$method->id] = $this->createPaymentMethod($method, false);
+        }
+
+        foreach ($methodsEnabled as $method) {
+            $methods[$method->id] = $this->createPaymentMethod($method, true);
+        }
+
+        return $methods;
+    }
+
+    private function createPaymentMethod(Method $method, bool $active): PaymentMethod
+    {
+        return new PaymentMethod(
+            $method->id,
+            $method->description,
+            $method->image->svg,
+            $active
+        );
     }
 }

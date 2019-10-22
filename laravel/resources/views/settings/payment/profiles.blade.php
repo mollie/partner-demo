@@ -1,12 +1,15 @@
+<?php
+/** @var \App\PaymentProfile[] $profiles */
+/** @var \App\PaymentMethod[] $methods */
+?>
 <hr style="margin: 40px 0">
 <div class="form-group">
     <label for="profile">Web Profile</label>
 
-    <?php /** @var \App\PaymentProfile[] $profiles */ ?>
     <form action="{{ route('payment_status') }}">
         <select class="form-control" name="profile" id="profile" onchange="this.form.submit()">
             @foreach($profiles as $profile)
-                <option value="{{ $profile->getId() }}">
+                <option value="{{ $profile->getId() }}" {{ $profile === $selected ? 'selected' : '' }}>
                     {{ $profile->getName() }} - {{ $profile->getWebsite() }}
                 </option>
             @endforeach
@@ -19,7 +22,6 @@
 <div>
     <label for="profile">Payment methods</label>
 
-    <?php /** @var \App\PaymentMethod[] $methods */ ?>
     <ul>
         @foreach($methods as $method)
             <li>

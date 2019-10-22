@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Settings\Payment;
 
 use App\Exceptions\UserNotConnectedToMollie;
+use App\PaymentProfile;
 use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\PaymentMethodService;
 use App\Services\Mollie\StatusService;
 use App\Services\Mollie\UserPaymentProfileService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
@@ -41,7 +43,7 @@ class StatusController
      * @return RedirectResponse|View
      * @throws IdentityProviderException
      */
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         $user = $this->userLoader->load();
 
@@ -52,12 +54,34 @@ class StatusController
         }
 
         $profiles = $this->profileService->loadUserProfile($user);
-        $methods = $this->paymentMethodsService->loadFromProfile($user, current($profiles));
+        $selected = $this->getSelectedProfile($request->get('profile'), $profiles);
+
+        $methods = $this->paymentMethodsService->loadFromProfile($user, $selected);
 
         return view('settings.payment.status', [
             'status' => $status,
             'profiles' => $profiles,
             'methods' => $methods,
+            'selected' => $selected,
         ]);
+    }
+
+    /**
+     * @param string $profileId
+     * @param PaymentProfile[] $profiles
+     */
+    private function getSelectedProfile(?string $profileId, array $profiles): PaymentProfile
+    {
+        $selected = current(
+            array_filter($profiles, function (PaymentProfile $profile) use ($profileId): bool {
+                return $profile->getId() === $profileId;
+            })
+        );
+
+        if (!$selected) {
+            return current($profiles);
+        }
+
+        return $selected;
     }
 }
