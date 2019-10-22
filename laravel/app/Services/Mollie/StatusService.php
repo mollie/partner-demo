@@ -3,7 +3,6 @@
 namespace App\Services\Mollie;
 
 use App\Exceptions\UserNotConnectedToMollie;
-use App\Factories\MollieApiClientFactory;
 use App\OnboardingStatus;
 use App\Repositories\MollieAccessTokenRepository;
 use App\User;
