@@ -13,7 +13,7 @@
             </div>
             <main id="content" class="col-md pr-3">
                 <div class="card-header d-none-sm bg-light">{{ $title ?? '' }}</div>
-                <div class="dashboard_content pt-5 px-3">
+                <div class="dashboard_content pt-5 px-3 d-flex">
                     @yield('dashboard_content')
                 </div>
             </main>
