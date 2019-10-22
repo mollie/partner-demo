@@ -9,7 +9,6 @@ use App\Services\Mollie\AuthorizationLinkService;
 use App\User;
 use Mollie\OAuth2\Client\Provider\Mollie;
 use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
-use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
@@ -63,6 +62,9 @@ class AuthorizationLinkServiceTest extends TestCase
             MollieOAuthClient::SCOPE_ONBOARDING_WRITE,
             MollieOAuthClient::SCOPE_ORGANIZATIONS_READ,
             MollieOAuthClient::SCOPE_ORGANIZATIONS_WRITE,
+            MollieOAuthClient::SCOPE_PROFILES_READ,
+            MollieOAuthClient::SCOPE_PROFILES_WRITE,
+            MollieOAuthClient::SCOPE_PAYMENTS_READ,
         ];
     }
 }
