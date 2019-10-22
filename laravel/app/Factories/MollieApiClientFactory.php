@@ -11,7 +11,7 @@ class MollieApiClientFactory
     /**
      * @var MollieApiClient|null
      */
-    private static $mollieApiClient;
+    private $mollieApiClient;
 
     /**
      * @var MollieAccessTokenRepository
@@ -25,22 +25,20 @@ class MollieApiClientFactory
 
     public function createForUser(User $user): MollieApiClient
     {
-        $mollieApiClient = $this->getMollieApiClient();
-
-        $accessToken = $this->accessTokenRepository->getUserAccessToken($user);
-
-        $mollieApiClient->setAccessToken($accessToken->access_token);
-
-        return $mollieApiClient;
-    }
-
-    private function getMollieApiClient(): MollieApiClient
-    {
-        if (self::$mollieApiClient) {
-            return self::$mollieApiClient;
+        if (!$this->mollieApiClient) {
+            $this->mollieApiClient = $this->createClientForUser($user);
         }
 
-        return new MollieApiClient();
+        return $this->mollieApiClient;
     }
 
+    private function createClientForUser(User $user): MollieApiClient
+    {
+        $mollieAccessToken = $this->accessTokenRepository->getUserAccessToken($user);
+
+        $client = new MollieApiClient();
+        $client->setAccessToken($mollieAccessToken->access_token);
+
+        return $client;
+    }
 }
