@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\App\Factories;
 
+use App\Exceptions\UserNotConnectedToMollie;
 use App\Factories\MollieApiClientFactory;
 use App\MollieAccessToken;
 use App\Repositories\MollieAccessTokenRepository;
@@ -46,6 +47,17 @@ class MollieApiClientFactoryTest extends TestCase
             ->willReturn(new MollieAccessToken(['access_token' => self::ACCESS_TOKEN]));
 
         $this->factory->createForUser(new User());
+        $this->factory->createForUser(new User());
+    }
+
+    public function testWhenUserIsNotConnectedToMollieThenThrowException(): void
+    {
+        $this->repository
+            ->method('getUserAccessToken')
+            ->willReturn(null);
+
+        $this->expectException(UserNotConnectedToMollie::class);
+
         $this->factory->createForUser(new User());
     }
 

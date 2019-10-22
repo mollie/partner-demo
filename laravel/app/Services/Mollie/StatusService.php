@@ -3,11 +3,12 @@
 namespace App\Services\Mollie;
 
 use App\Exceptions\UserNotConnectedToMollie;
-use App\Factories\MollieApiClientFactory;
 use App\OnboardingStatus;
 use App\Repositories\MollieAccessTokenRepository;
 use App\User;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use Mollie\Api\Exceptions\ApiException;
+use Mollie\Api\Exceptions\IncompatiblePlatform;
 
 class StatusService
 {

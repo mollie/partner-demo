@@ -2,9 +2,12 @@
 
 namespace App\Services\Mollie;
 
+use App\Exceptions\UserNotConnectedToMollie;
 use App\Factories\MollieApiClientFactory;
 use App\OnboardingStatus;
 use App\User;
+use Mollie\Api\Exceptions\ApiException;
+use Mollie\Api\Exceptions\IncompatiblePlatform;
 
 class GetOnboardingStatusService
 {
@@ -18,6 +21,9 @@ class GetOnboardingStatusService
         $this->apiClientFactory = $apiClientFactory;
     }
 
+    /**
+     * @throws UserNotConnectedToMollie
+     */
     public function getOnboardingStatus(User $user): OnboardingStatus
     {
         $apiClient = $this->apiClientFactory->createForUser($user);
