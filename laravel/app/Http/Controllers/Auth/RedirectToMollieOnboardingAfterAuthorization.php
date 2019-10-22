@@ -41,7 +41,7 @@ class RedirectToMollieOnboardingAfterAuthorization
         $mollieStatus = $this->onboardingStatusService->getOnboardingStatus($user);
 
         if (!$mollieStatus->needsData()) {
-            return redirect(route("payment_settings"));
+            return redirect(route("payment_status"));
         }
 
         $this->submitOnboardingDataService->submitOnboardingData($user);
