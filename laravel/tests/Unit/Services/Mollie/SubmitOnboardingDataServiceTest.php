@@ -51,7 +51,7 @@ class SubmitOnboardingDataServiceTest extends TestCase
                     "name" => $user->company_name
                 ],
                 "profile" => [
-                    "website" => $user->website
+                    "url" => $user->website
                 ]
             ]);
 
