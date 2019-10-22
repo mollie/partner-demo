@@ -3,11 +3,15 @@
     <label for="profile">Web Profile</label>
 
     <?php /** @var \App\PaymentProfile[] $profiles */ ?>
-    <select class="form-control" name="profile" id="profile">
-        @foreach($profiles as $profile)
-            <option value="{{ $profile->getId() }}">{{ $profile->getName() }} - {{ $profile->getWebsite() }}</option>
-        @endforeach
-    </select>
+    <form action="{{ route('payment_status') }}">
+        <select class="form-control" name="profile" id="profile" onchange="this.form.submit()">
+            @foreach($profiles as $profile)
+                <option value="{{ $profile->getId() }}">
+                    {{ $profile->getName() }} - {{ $profile->getWebsite() }}
+                </option>
+            @endforeach
+        </select>
+    </form>
 </div>
 
 <br>
