@@ -27,7 +27,7 @@
             <li>
                 <img src="{{ $method->getImage() }}" alt="" height="25px">
                 {{ $method->getName() }}
-                <input type="checkbox" {{ $method->isActive() ? 'checked' : '' }}>
+                <input name="{{ $method->getId() }}" type="checkbox" {{ $method->isActive() ? 'checked' : '' }}>
             </li>
         @endforeach
     </ul>
