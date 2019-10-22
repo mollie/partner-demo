@@ -21,15 +21,14 @@ use App\Http\Controllers\Settings\Payment\StatusController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::namespace('App\Http\Controllers')->group(function () {
     Auth::routes();
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect(route('home'));
+    });
     Route::get('/home', HomeController::class)->name('home');
 
     Route::get('settings/payment/oauth/return', ReturnFromMollieController::class)->name('return_from_mollie');
