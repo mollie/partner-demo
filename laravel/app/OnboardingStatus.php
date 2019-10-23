@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Mollie\Api\Resources\Onboarding;
 use Mollie\Api\Types\OnboardingStatus as OnboardingEnum;
 
 class OnboardingStatus
@@ -57,7 +56,7 @@ class OnboardingStatus
         return $this->isCompleted() && $this->canReceivePayments && $this->canReceiveSettlements;
     }
 
-    private function needsData(): bool
+    public function needsData(): bool
     {
         return $this->status === OnboardingEnum::NEEDS_DATA;
     }

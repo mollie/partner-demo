@@ -34,6 +34,6 @@ class OAuthConfirmController
             ]);
         }
 
-        return redirect(route('payment_status'));
+        return redirect(route('oauth_authorized_redirect'));
     }
 }

@@ -32,7 +32,7 @@ class OAuthConfirmTest extends TestCase
         });
     }
 
-    public function testWhenMollieResponseIsValidThenRedirectToPaymentSettingsPage(): void
+    public function testWhenMollieResponseIsValidThenMerchantGetsRedirectedToMollie(): void
     {
         $this->client->method('getAccessToken')->willReturn(new AccessToken([
             'access_token' => 'token_abc123',
@@ -42,7 +42,7 @@ class OAuthConfirmTest extends TestCase
 
         $response = $this->json('GET', sprintf('settings/payment/oauth/confirm/%s', self::OAUTH_CODE));
 
-        $response->assertRedirect(url('/settings/payment'));
+        $response->assertRedirect(url('/settings/payment/oauth/redirect'));
         $this->assertDatabaseHas('mollie_access_tokens', [
             'user_id' => 1,
             'access_token' => 'token_abc123',
