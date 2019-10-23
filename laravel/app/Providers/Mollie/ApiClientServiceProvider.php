@@ -2,7 +2,6 @@
 
 namespace App\Providers\Mollie;
 
-use GuzzleHttp\Client as HttpClient;
 use Illuminate\Support\ServiceProvider;
 use Mollie\Api\MollieApiClient;
 
@@ -14,9 +13,14 @@ class ApiClientServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(MollieApiClient::class, function (): MollieApiClient {
-            return new MollieApiClient(
-                $this->app->get(HttpClient::class)
-            );
+            $client = new MollieApiClient();
+            $apiUrl = env('MOLLIE_API_URL');
+
+            if ($apiUrl) {
+                $client->setApiEndpoint($apiUrl);
+            }
+
+            return $client;
         });
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Providers\Mollie;
 
-use GuzzleHttp\Client as HttpClient;
 use Illuminate\Support\ServiceProvider;
 use Mollie\OAuth2\Client\Provider\Mollie;
 
@@ -19,8 +18,6 @@ class OAuthClientServiceProvider extends ServiceProvider
                 'clientSecret' => env('MOLLIE_CLIENT_SECRET'),
                 'redirectUri' => env('APP_URL') . '/settings/payment/oauth/return',
                 'verify' => 'false',
-            ], [
-                'httpClient' => $this->app->get(HttpClient::class),
             ]);
         });
     }
