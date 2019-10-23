@@ -29,9 +29,6 @@
             <a href="{{ $status->getDashboardLink() }}">
                 <button class="btn-primary rounded btn-lg">Add more information</button>
             </a>
-            @include('settings.payment.profiles')
-
-            @include('settings.payment.profiles')
 
         @elseif($status->settlementsAreDisabledBecauseMollieIsReviewing())
 
@@ -41,7 +38,6 @@
                 You are ready to start accepting your first payments! <br/>
                 Mollie is reviewing your account for settlements, this usually takes 1-2 business days.
             </p>
-            @include('settings.payment.profiles')
 
         @elseif($status->paymentsAndSettlementsAreDisabledBecauseMollieIsReviewing())
 
@@ -62,7 +58,6 @@
                 You are ready to start accepting your first payments! <br/>
                 Expect settlements on every Monday.
             </p>
-            @include('settings.payment.profiles')
 
             <a href="{{ $status->getDashboardLink() }}">
                 <button class="btn-primary rounded btn-lg">Add more information</button>
@@ -70,24 +65,5 @@
 
         @endif
     </div>
-    <div class="payment-methods">
-        <h4 class="font-weight-bold ml-4">Active Payment Methods</h4>
-        <ul>
-            <li>
-                <div>
-                    <span class="status status-green"></span>
-                    ideka
-                </div>
-            </li>
-        </ul>
-        <h4 class="font-weight-bold ml-4">Pending Payment Methods</h4>
-        <ul>
-            <li>
-                <div>
-                    <span class="status status-yellow"></span>
-                    creditcradd
-                </div>
-            </li>
-        </ul>
-    </div>
+    @include('settings.payment.profiles')
 @endsection

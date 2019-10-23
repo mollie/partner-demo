@@ -3217,6 +3217,10 @@ a.text-dark:hover, a.text-dark:focus {
     background: #4cd964;
 }
 
-.status-yellow::before {
-    background: #4cd964;
+.status-red::before {
+    background: red;
+}
+
+.flex {
+    display: flex;
 }
