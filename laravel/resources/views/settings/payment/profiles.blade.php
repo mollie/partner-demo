@@ -2,33 +2,33 @@
 /** @var \App\PaymentProfile[] $profiles */
 /** @var \App\PaymentMethod[] $methods */
 ?>
-<hr style="margin: 40px 0">
-<div class="form-group">
-    <label for="profile">Web Profile</label>
-
-    <form action="{{ route('payment_status') }}">
-        <select class="form-control" name="profile" id="profile" onchange="this.form.submit()">
-            @foreach($profiles as $profile)
-                <option value="{{ $profile->getId() }}" {{ $profile === $selected ? 'selected' : '' }}>
-                    {{ $profile->getName() }} - {{ $profile->getWebsite() }}
-                </option>
-            @endforeach
-        </select>
-    </form>
-</div>
-
-<br>
-
-<div>
-    <label for="profile">Payment methods</label>
-
-    <ul>
-        @foreach($methods as $method)
-            <li>
-                <img src="{{ $method->getImage() }}" alt="" height="25px">
-                {{ $method->getName() }}
-                <input name="{{ $method->getId() }}" type="checkbox" {{ $method->isActive() ? 'checked' : '' }}>
-            </li>
-        @endforeach
-    </ul>
-</div>
+@if(!empty($methodsEnabled) || !empty($methodsDisabled))
+    <div class="payment-methods">
+        @if(!empty($methodsEnabled))
+            <h4 class="font-weight-bold ml-4">Active Payment Methods</h4>
+            <ul>
+                @foreach($methodsEnabled as $method)
+                    <li>
+                        <div>
+                            <span class="status status-green"></span>
+                            {{ $method->getName() }}
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+        @if(!empty($methodsDisabled))
+            <h4 class="font-weight-bold ml-4">Inactive Payment Methods</h4>
+            <ul>
+                @foreach($methodsDisabled as $method)
+                    <li>
+                        <div>
+                            <span class="status status-red"></span>
+                            {{ $method->getName() }}
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+    </div>
+@endif
