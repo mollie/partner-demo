@@ -31,6 +31,8 @@
             </a>
             @include('settings.payment.profiles')
 
+            @include('settings.payment.profiles')
+
         @elseif($status->settlementsAreDisabledBecauseMollieIsReviewing())
 
             <h1>Payments enabled</h1>
