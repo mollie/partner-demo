@@ -63,7 +63,6 @@ class AuthorizationLinkServiceTest extends TestCase
             MollieOAuthClient::SCOPE_ORGANIZATIONS_READ,
             MollieOAuthClient::SCOPE_ORGANIZATIONS_WRITE,
             MollieOAuthClient::SCOPE_PROFILES_READ,
-            MollieOAuthClient::SCOPE_PROFILES_WRITE,
             MollieOAuthClient::SCOPE_PAYMENTS_READ,
         ];
     }
