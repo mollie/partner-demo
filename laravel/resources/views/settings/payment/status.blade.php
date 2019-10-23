@@ -30,6 +30,8 @@
                 <button class="btn-primary rounded btn-lg">Add more information</button>
             </a>
 
+            @include('settings.payment.profiles')
+
         @elseif($status->settlementsAreDisabledBecauseMollieIsReviewing())
 
             <h1>Payments enabled</h1>

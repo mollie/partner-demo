@@ -5,7 +5,6 @@ namespace App\Services\Mollie;
 use App\Exceptions\UserAlreadyConnectedToMollie;
 use App\Repositories\MollieAccessTokenRepository;
 use App\User;
-use Exception;
 use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
 
 class AuthorizationLinkService
@@ -45,6 +44,8 @@ class AuthorizationLinkService
             MollieOAuthClient::SCOPE_ONBOARDING_WRITE,
             MollieOAuthClient::SCOPE_ORGANIZATIONS_READ,
             MollieOAuthClient::SCOPE_ORGANIZATIONS_WRITE,
+            MollieOAuthClient::SCOPE_PROFILES_READ,
+            MollieOAuthClient::SCOPE_PAYMENTS_READ,
         ];
     }
 }
