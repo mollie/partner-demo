@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Exceptions\UserNotConnectedToMollie;
 use App\Repositories\MollieAccessTokenRepository;
 use App\User;
 use Mollie\Api\MollieApiClient;
@@ -11,7 +12,7 @@ class MollieApiClientFactory
     /**
      * @var MollieApiClient|null
      */
-    private static $mollieApiClient;
+    private $mollieApiClient;
 
     /**
      * @var MollieAccessTokenRepository
@@ -23,24 +24,32 @@ class MollieApiClientFactory
         $this->accessTokenRepository = $accessTokenRepository;
     }
 
+    /**
+     * @throws UserNotConnectedToMollie
+     */
     public function createForUser(User $user): MollieApiClient
     {
-        $mollieApiClient = $this->getMollieApiClient();
-
-        $accessToken = $this->accessTokenRepository->getUserAccessToken($user);
-
-        $mollieApiClient->setAccessToken($accessToken->access_token);
-
-        return $mollieApiClient;
-    }
-
-    private function getMollieApiClient(): MollieApiClient
-    {
-        if (self::$mollieApiClient) {
-            return self::$mollieApiClient;
+        if (!$this->mollieApiClient) {
+            $this->mollieApiClient = $this->create($user);
         }
 
-        return new MollieApiClient();
+        return $this->mollieApiClient;
     }
 
+    /**
+     * @throws UserNotConnectedToMollie
+     */
+    private function create(User $user): MollieApiClient
+    {
+        $mollieAccessToken = $this->accessTokenRepository->getUserAccessToken($user);
+
+        if (!$mollieAccessToken) {
+            throw new UserNotConnectedToMollie($user);
+        }
+
+        $client = new MollieApiClient();
+        $client->setAccessToken($mollieAccessToken->access_token);
+
+        return $client;
+    }
 }
