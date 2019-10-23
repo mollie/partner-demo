@@ -38,7 +38,6 @@ class AuthorizationCodeService
         $response = $this->mollieClient->getAccessToken('authorization_code', [
             'code' => $code,
         ]);
-
         $mollieAccessToken = new MollieAccessToken();
         $mollieAccessToken->user_id = $user->id;
         $mollieAccessToken->access_token = $response->getToken();

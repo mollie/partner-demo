@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Auth\RedirectToMollieOnboardingAfterAuthorization;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Settings\Payment\ConnectToMollieController;
 use App\Http\Controllers\Settings\Payment\OAuthConfirmController;
@@ -42,5 +43,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['connected_to_mollie'])->group(function () {
         Route::get('settings/payment', StatusController::class)->name('payment_status');
+
+        Route::get('settings/payment/oauth/redirect', RedirectToMollieOnboardingAfterAuthorization::class)->name('oauth_authorized_redirect');
     });
 });

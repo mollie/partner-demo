@@ -28,12 +28,13 @@ class OAuthConfirmController
         try {
             $this->initializationService->authorize($authCode, $user);
         } catch (IdentityProviderException $e) {
+            dd($e);
             return redirect(route('payment_status'))->withErrors([
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),
             ]);
         }
 
-        return redirect(route('payment_status'));
+        return redirect(route('oauth_authorized_redirect'));
     }
 }
