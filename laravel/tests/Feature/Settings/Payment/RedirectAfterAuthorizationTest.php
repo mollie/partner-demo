@@ -99,5 +99,4 @@ class RedirectAfterAuthorizationTest extends TestCase
             'expires_at' => new DateTime('1970-01-01 10:10:58'),
         ]);
     }
-
 }

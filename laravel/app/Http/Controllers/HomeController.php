@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 
+/**
+ * @codeCoverageIgnore
+ */
 class HomeController extends Controller
 {
     /**

@@ -26,8 +26,8 @@ class PaymentMethodService
         $client = $this->clientFactory->createForUser($user);
         $methods = [];
 
-        $methodsAvailable = $client->methods->allAvailable(['profileId' => $profile->getId()]);
-        $methodsEnabled = $client->methods->allActive(['profileId' => $profile->getId()]);
+        $methodsAvailable = iterator_to_array($client->methods->allAvailable(['profileId' => $profile->getId()]));
+        $methodsEnabled = iterator_to_array($client->methods->allActive(['profileId' => $profile->getId()]));
 
         foreach ($methodsAvailable as $method) {
             $methods[$method->id] = $this->createPaymentMethod($method, false);

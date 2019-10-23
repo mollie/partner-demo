@@ -45,9 +45,9 @@ class UserPaymentProfileServiceTest extends TestCase
     public function testWhenApiPaymentProfilesAreLoadedThenMapIntoPaymentProfiles(): void
     {
         $this->profile->method('page')->willReturn(new ArrayIterator([
-            $this->createMollieMethod('profile_123', 'Profile 123', 'http://profile123.nl'),
-            $this->createMollieMethod('profile_456', 'Profile 456', 'http://profile456.nl'),
-            $this->createMollieMethod('profile_789', 'Profile 789', 'http://profile789.nl'),
+            $this->createMollieProfile('profile_123', 'Profile 123', 'http://profile123.nl'),
+            $this->createMollieProfile('profile_456', 'Profile 456', 'http://profile456.nl'),
+            $this->createMollieProfile('profile_789', 'Profile 789', 'http://profile789.nl'),
         ]));
 
         $profiles = $this->service->loadUserProfile(new User());
@@ -59,7 +59,7 @@ class UserPaymentProfileServiceTest extends TestCase
         ], $profiles);
     }
 
-    private function createMollieMethod(string $id, string $name, string $website): Profile
+    private function createMollieProfile(string $id, string $name, string $website): Profile
     {
         $method = new Profile($this->client);
         $method->id = $id;
