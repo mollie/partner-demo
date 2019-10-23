@@ -3,6 +3,7 @@
 namespace Tests\Unit\App\Services\Mollie;
 
 use App\Factories\MollieApiClientFactory;
+use App\PaymentMethod;
 use App\PaymentProfile;
 use App\Services\Mollie\PaymentMethodService;
 use App\User;
@@ -33,13 +34,8 @@ class PaymentMethodServiceTest extends TestCase
         $this->service = new PaymentMethodService($factory);
     }
 
-    public function testShouldMergeAvailableAndActiveMethods(): void
+    public function testShouldReturnActiveMethods(): void
     {
-        $this->client->methods->method('allAvailable')->willReturn([
-            $this->createMollieMethod('applepay', 'Apple Pay'),
-            $this->createMollieMethod('ideal', 'iDEAL'),
-            $this->createMollieMethod('creditcard', 'Credit card'),
-        ]);
         $this->client->methods->method('allActive')->willReturn([
             $this->createMollieMethod('ideal', 'iDEAL'),
         ]);
@@ -48,9 +44,7 @@ class PaymentMethodServiceTest extends TestCase
 
         $this->assertEquals(
             [
-                'applepay' => new PaymentMethod('applepay', 'Apple Pay', 'image.svg', false),
-                'ideal' => new PaymentMethod('ideal', 'iDEAL', 'image.svg', true),
-                'creditcard' => new PaymentMethod('creditcard', 'Credit card', 'image.svg', false),
+                'ideal' => new PaymentMethod('ideal', 'iDEAL'),
             ],
             $methods
         );
