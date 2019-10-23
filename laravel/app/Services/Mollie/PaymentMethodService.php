@@ -26,27 +26,20 @@ class PaymentMethodService
         $client = $this->clientFactory->createForUser($user);
         $methods = [];
 
-        $methodsAvailable = $client->methods->allAvailable(['profileId' => $profile->getId()]);
         $methodsEnabled = $client->methods->allActive(['profileId' => $profile->getId()]);
 
-        foreach ($methodsAvailable as $method) {
-            $methods[$method->id] = $this->createPaymentMethod($method, false);
-        }
-
         foreach ($methodsEnabled as $method) {
-            $methods[$method->id] = $this->createPaymentMethod($method, true);
+            $methods[$method->id] = $this->createPaymentMethod($method);
         }
 
         return $methods;
     }
 
-    private function createPaymentMethod(Method $method, bool $active): PaymentMethod
+    private function createPaymentMethod(Method $method): PaymentMethod
     {
         return new PaymentMethod(
             $method->id,
-            $method->description,
-            $method->image->svg,
-            $active
+            $method->description
         );
     }
 }

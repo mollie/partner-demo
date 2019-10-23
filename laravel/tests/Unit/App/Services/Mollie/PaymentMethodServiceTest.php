@@ -3,7 +3,6 @@
 namespace Tests\Unit\App\Services\Mollie;
 
 use App\Factories\MollieApiClientFactory;
-use App\PaymentMethod;
 use App\PaymentProfile;
 use App\Services\Mollie\PaymentMethodService;
 use App\User;
