@@ -1,23 +1,13 @@
 <?php
 /** @var \App\PaymentProfile[] $profiles */
 /** @var \App\PaymentMethod[] $methods */
-$methodsAvailable = [];
-$methodsUnavailable = [];
-foreach ($methods as $method) {
-    if ($method->isActive()) {
-        array_push($methodsAvailable, $method);
-    } else {
-        array_push($methodsUnavailable, $method);
-    }
-}
 ?>
-
-@if(!empty($methodsAvailable) || !empty($methodsUnavailable))
+@if(!empty($methodsEnabled) || !empty($methodsDisabled))
     <div class="payment-methods">
-        @if(!empty($methodsAvailable))
+        @if(!empty($methodsEnabled))
             <h4 class="font-weight-bold ml-4">Active Payment Methods</h4>
             <ul>
-                @foreach($methodsAvailable as $method)
+                @foreach($methodsEnabled as $method)
                     <li>
                         <div>
                             <span class="status status-green"></span>
@@ -27,10 +17,10 @@ foreach ($methods as $method) {
                 @endforeach
             </ul>
         @endif
-        @if(!empty($methodsUnavailable))
+        @if(!empty($methodsDisabled))
             <h4 class="font-weight-bold ml-4">Inactive Payment Methods</h4>
             <ul>
-                @foreach($methodsUnavailable as $method)
+                @foreach($methodsDisabled as $method)
                     <li>
                         <div>
                             <span class="status status-red"></span>
@@ -40,5 +30,5 @@ foreach ($methods as $method) {
                 @endforeach
             </ul>
         @endif
-        @endif
     </div>
+@endif

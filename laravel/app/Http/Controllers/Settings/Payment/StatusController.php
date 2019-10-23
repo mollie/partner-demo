@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings\Payment;
 
 use App\Exceptions\UserNotConnectedToMollie;
+use App\PaymentMethod;
 use App\PaymentProfile;
 use App\Services\AuthenticatedUserLoader;
 use App\Services\Mollie\PaymentMethodService;
@@ -58,11 +59,19 @@ class StatusController
 
         $methods = $this->paymentMethodsService->loadFromProfile($user, $selected);
 
+        $methodsEnabled = array_filter($methods, function (PaymentMethod $method): bool {
+            return $method->isActive() === true;
+        });
+
+        $methodsDisabled = array_filter($methods, function (PaymentMethod $method): bool {
+            return $method->isActive() === false;
+        });
+
         return view('settings.payment.status', [
             'status' => $status,
             'profiles' => $profiles,
-            'methods' => $methods,
-            'selected' => $selected,
+            'methodsEnabled' => $methodsEnabled,
+            'methodsDisabled' => $methodsDisabled,
         ]);
     }
 
