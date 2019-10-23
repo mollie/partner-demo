@@ -3,13 +3,25 @@
 namespace Tests\Feature\Settings\Payment;
 
 use App\MollieAccessToken;
+use App\OnboardingStatus;
+use App\PaymentMethod;
+use App\PaymentProfile;
 use App\User;
+use ArrayIterator;
 use DateTime;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use League\OAuth2\Client\Token\AccessToken;
-use Mollie\OAuth2\Client\Provider\Mollie;
+use Mollie\Api\Endpoints\MethodEndpoint;
+use Mollie\Api\Endpoints\OnboardingEndpoint;
+use Mollie\Api\Endpoints\ProfileEndpoint;
+use Mollie\Api\MollieApiClient;
+use Mollie\Api\Resources\Method;
+use Mollie\Api\Resources\Onboarding;
+use Mollie\Api\Resources\Profile;
+use Mollie\OAuth2\Client\Provider\Mollie as MollieOAuthClient;
 use PHPUnit\Framework\MockObject\MockObject;
+use stdClass;
 use Tests\TestCase;
 
 class StatusTest extends TestCase
@@ -19,8 +31,11 @@ class StatusTest extends TestCase
     private const ACCESS_TOKEN = 'access_abc123';
     private const REFRESH_TOKEN = 'refresh_abc123';
 
-    /** @var Mollie|MockObject */
-    private $client;
+    /** @var MollieOAuthClient|MockObject */
+    private $oauthClient;
+
+    /** @var MollieApiClient|MockObject */
+    private $apiClient;
 
     protected function setUp(): void
     {
@@ -28,9 +43,17 @@ class StatusTest extends TestCase
 
         Auth::setUser(User::find(1));
 
-        $this->client = $this->createMock(Mollie::class);
-        $this->app->bind(Mollie::class, function (): Mollie {
-            return $this->client;
+        $this->oauthClient = $this->createMock(MollieOAuthClient::class);
+        $this->apiClient = $this->createMock(MollieApiClient::class);
+        $this->apiClient->profiles = $this->createMock(ProfileEndpoint::class);
+        $this->apiClient->methods = $this->createMock(MethodEndpoint::class);
+        $this->apiClient->onboarding = $this->createMock(OnboardingEndpoint::class);
+
+        $this->app->bind(MollieOAuthClient::class, function (): MollieOAuthClient {
+            return $this->oauthClient;
+        });
+        $this->app->bind(MollieApiClient::class, function (): MollieApiClient {
+            return $this->apiClient;
         });
     }
 
@@ -46,8 +69,8 @@ class StatusTest extends TestCase
     public function testWhenTokenIsExpiredThenRefresh(): void
     {
         $this->createAccessTokenForTest();
-        $this->client->method('getAccessToken')->willReturn(new AccessToken([
-            'access_token' => 'token_abc123_new',
+        $this->oauthClient->method('getAccessToken')->willReturn(new AccessToken([
+            'access_token' => 'access_token_abc123_new',
             'expires_in' => strtotime('2019-10-01 09:50:34'),
         ]));
 
@@ -55,9 +78,44 @@ class StatusTest extends TestCase
 
         $this->assertDatabaseHas('mollie_access_tokens', [
             'user_id' => 1,
-            'access_token' => 'token_abc123_new',
+            'access_token' => 'access_token_abc123_new',
             'refresh_token' => 'refresh_abc123',
         ]);
+    }
+
+    public function testWhenMethodsAndProfilesAreLoadedThenShowOnView(): void
+    {
+        $this->createAccessTokenForTest();
+        $this->mockMollieClients();
+
+        $this->apiClient->methods->expects($this->once())->method('allAvailable')->with(['profileId' => 'profile_1']);
+        $this->apiClient->methods->expects($this->once())->method('allActive')->with(['profileId' => 'profile_1']);
+
+        $response = $this->json('GET', route('payment_status'));
+
+        $response->assertViewHas('status', new OnboardingStatus('completed', true, true, 'http://example/dashboard'));
+        $response->assertViewHas('profiles', [
+            new PaymentProfile('profile_1', 'Profile 1', 'http://profile1.nl'),
+            new PaymentProfile('profile_2', 'Profile 2', 'http://profile2.nl'),
+        ]);
+        $response->assertViewHas('methodsEnabled', [
+            'ideal' => new PaymentMethod('ideal', 'iDEAL', 'image.svg', true),
+        ]);
+        $response->assertViewHas('methodsDisabled', [
+            'applepay' => new PaymentMethod('applepay', 'Apple Pay', 'image.svg', false),
+            'creditcard' => new PaymentMethod('creditcard', 'Credit card', 'image.svg', false),
+        ]);
+    }
+
+    public function testWhenGivenAProfileIdThenLoadMethodsForIt(): void
+    {
+        $this->createAccessTokenForTest();
+        $this->mockMollieClients();
+
+        $this->apiClient->methods->expects($this->once())->method('allAvailable')->with(['profileId' => 'profile_2']);
+        $this->apiClient->methods->expects($this->once())->method('allActive')->with(['profileId' => 'profile_2']);
+
+        $this->json('GET', route('payment_status'), ['profile' => 'profile_2']);
     }
 
     private function createAccessTokenForTest(): void
@@ -68,5 +126,63 @@ class StatusTest extends TestCase
             'refresh_token' => self::REFRESH_TOKEN,
             'expires_at' => new DateTime('1970-01-01 10:10:58'),
         ]);
+    }
+
+    private function createMollieProfile(string $id, string $name, string $website): Profile
+    {
+        $method = new Profile($this->apiClient);
+        $method->id = $id;
+        $method->name = $name;
+        $method->website = $website;
+
+        return $method;
+    }
+
+    private function createMollieMethod(string $id, string $description): Method
+    {
+        $method = new Method($this->apiClient);
+
+        $method->id = $id;
+        $method->description = $description;
+        $method->image = new stdClass();
+        $method->image->svg = 'image.svg';
+
+        return $method;
+    }
+
+    private function createMollieOnboarding(): Onboarding
+    {
+        $onboarding = new Onboarding($this->apiClient);
+        $onboarding->_links = (object) ['dashboard' => (object) ['href' => 'http://example/dashboard']];
+        $onboarding->status = 'completed';
+        $onboarding->canReceivePayments = true;
+        $onboarding->canReceiveSettlements = true;
+
+        return $onboarding;
+    }
+
+    private function mockMollieClients(): void
+    {
+        $this->apiClient->profiles->method('page')->willReturn(new ArrayIterator([
+            $this->createMollieProfile('profile_1', 'Profile 1', 'http://profile1.nl'),
+            $this->createMollieProfile('profile_2', 'Profile 2', 'http://profile2.nl'),
+        ]));
+
+        $this->apiClient->methods->method('allAvailable')->willReturn(new  ArrayIterator([
+            $this->createMollieMethod('applepay', 'Apple Pay'),
+            $this->createMollieMethod('ideal', 'iDEAL'),
+            $this->createMollieMethod('creditcard', 'Credit card'),
+        ]));
+
+        $this->apiClient->methods->method('allActive')->willReturn(new  ArrayIterator([
+            $this->createMollieMethod('ideal', 'iDEAL'),
+        ]));
+
+        $this->apiClient->onboarding->method('get')->willReturn($this->createMollieOnboarding());
+
+        $this->oauthClient->method('getAccessToken')->willReturn(new AccessToken([
+            'access_token' => 'access_token_abc123_new',
+            'expires_in' => strtotime('2019-10-01 09:50:34'),
+        ]));
     }
 }

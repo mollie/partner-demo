@@ -7,6 +7,7 @@ use App\PaymentMethod;
 use App\PaymentProfile;
 use App\Services\Mollie\PaymentMethodService;
 use App\User;
+use ArrayIterator;
 use Mollie\Api\Endpoints\MethodEndpoint;
 use Mollie\Api\MollieApiClient;
 use Mollie\Api\Resources\Method;
@@ -36,9 +37,9 @@ class PaymentMethodServiceTest extends TestCase
 
     public function testShouldReturnActiveMethods(): void
     {
-        $this->client->methods->method('allActive')->willReturn([
+        $this->client->methods->method('allActive')->willReturn(new  ArrayIterator([
             $this->createMollieMethod('ideal', 'iDEAL'),
-        ]);
+        ]));
 
         $methods = $this->service->loadFromProfile(new User(), new PaymentProfile('', '', ''));
 
@@ -50,17 +51,12 @@ class PaymentMethodServiceTest extends TestCase
         );
     }
 
-    /**
-     * @return Method
-     */
     private function createMollieMethod(string $id, string $description): Method
     {
         $method = new Method($this->client);
 
         $method->id = $id;
         $method->description = $description;
-        $method->image = new stdClass();
-        $method->image->svg = 'image.svg';
 
         return $method;
     }
