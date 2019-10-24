@@ -14,6 +14,7 @@ use Tests\TestCase;
 class MollieApiClientFactoryTest extends TestCase
 {
     const ACCESS_TOKEN = 'access_123abc';
+
     /** @var MollieAccessTokenRepository|MockObject */
     private $repository;
 
@@ -25,7 +26,7 @@ class MollieApiClientFactoryTest extends TestCase
         parent::setUp();
 
         $this->repository = $this->createMock(MollieAccessTokenRepository::class);
-        $this->factory = new MollieApiClientFactory($this->repository);
+        $this->factory = new MollieApiClientFactory(new MollieApiClient(), $this->repository);
     }
 
     public function testWhenUserIsConnectedToMollieThenReturnClient(): void

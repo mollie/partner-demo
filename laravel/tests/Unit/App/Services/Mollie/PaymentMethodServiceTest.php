@@ -7,6 +7,7 @@ use App\PaymentMethod;
 use App\PaymentProfile;
 use App\Services\Mollie\PaymentMethodService;
 use App\User;
+use ArrayIterator;
 use Mollie\Api\Endpoints\MethodEndpoint;
 use Mollie\Api\MollieApiClient;
 use Mollie\Api\Resources\Method;
@@ -34,40 +35,28 @@ class PaymentMethodServiceTest extends TestCase
         $this->service = new PaymentMethodService($factory);
     }
 
-    public function testShouldMergeAvailableAndActiveMethods(): void
+    public function testShouldReturnActiveMethods(): void
     {
-        $this->client->methods->method('allAvailable')->willReturn([
-            $this->createMollieMethod('applepay', 'Apple Pay'),
+        $this->client->methods->method('allActive')->willReturn(new  ArrayIterator([
             $this->createMollieMethod('ideal', 'iDEAL'),
-            $this->createMollieMethod('creditcard', 'Credit card'),
-        ]);
-        $this->client->methods->method('allActive')->willReturn([
-            $this->createMollieMethod('ideal', 'iDEAL'),
-        ]);
+        ]));
 
         $methods = $this->service->loadFromProfile(new User(), new PaymentProfile('', '', ''));
 
         $this->assertEquals(
             [
-                'applepay' => new PaymentMethod('applepay', 'Apple Pay', 'image.svg', false),
-                'ideal' => new PaymentMethod('ideal', 'iDEAL', 'image.svg', true),
-                'creditcard' => new PaymentMethod('creditcard', 'Credit card', 'image.svg', false),
+                'ideal' => new PaymentMethod('ideal', 'iDEAL'),
             ],
             $methods
         );
     }
 
-    /**
-     * @return Method
-     */
     private function createMollieMethod(string $id, string $description): Method
     {
         $method = new Method($this->client);
 
         $method->id = $id;
         $method->description = $description;
-        $method->image = new stdClass();
-        $method->image->svg = 'image.svg';
 
         return $method;
     }

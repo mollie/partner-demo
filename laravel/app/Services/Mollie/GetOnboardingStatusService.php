@@ -6,8 +6,6 @@ use App\Exceptions\UserNotConnectedToMollie;
 use App\Factories\MollieApiClientFactory;
 use App\OnboardingStatus;
 use App\User;
-use Mollie\Api\Exceptions\ApiException;
-use Mollie\Api\Exceptions\IncompatiblePlatform;
 
 class GetOnboardingStatusService
 {
