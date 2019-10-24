@@ -13,9 +13,7 @@
                 Please complete the required information and you will be ready to accept payments with Mollie.
             </p>
 
-            <a href="{{ $status->getDashboardLink() }}">
-                <button class="btn-primary rounded btn-lg">Add more information</button>
-            </a>
+            @include('settings.payment.components.back_to_mollie', ['buttonLabel' => 'Add more information'])
 
         @elseif($status->settlementsAreDisabledBecauseMollieNeedsMoreData())
 
@@ -26,9 +24,7 @@
                 Before you can receive the payments on your bank account, Mollie will need a few more things.
             </p>
 
-            <a href="{{ $status->getDashboardLink() }}">
-                <button class="btn-primary rounded btn-lg">Add more information</button>
-            </a>
+            @include('settings.payment.components.back_to_mollie', ['buttonLabel' => 'Add more information'])
 
         @elseif($status->settlementsAreDisabledBecauseMollieIsReviewing())
 
@@ -39,9 +35,7 @@
                 Mollie is reviewing your account for settlements, this usually takes 1-2 business days.
             </p>
 
-            <a href="{{ $status->getDashboardLink() }}">
-                <button class="btn-primary rounded btn-lg">Go to Mollie Dashboard</button>
-            </a>
+            @include('settings.payment.components.back_to_mollie', ['buttonLabel' => 'Go to Mollie Dashboard'])
 
         @elseif($status->paymentsAndSettlementsAreDisabledBecauseMollieIsReviewing())
 
@@ -50,13 +44,10 @@
             <p>
                 You’ve supplied us with all information we need. We are now verifying your details. <br/>
                 Our approval process usually takes 1 to 3 business days. In the meantime, you can continue setting up
-                your
-                integration with Mollie.
+                your integration with Mollie.
             </p>
 
-            <a href="{{ $status->getDashboardLink() }}">
-                <button class="btn-primary rounded btn-lg">Go to Mollie Dashboard</button>
-            </a>
+            @include('settings.payment.components.back_to_mollie', ['buttonLabel' => 'Go to Mollie Dashboard'])
 
         @elseif($status->paymentsAndSettlementsAreEnabled())
 
@@ -67,9 +58,7 @@
                 Expect settlements on every Monday.
             </p>
 
-            <a href="{{ $status->getDashboardLink() }}">
-                <button class="btn-primary rounded btn-lg">Add more information</button>
-            </a>
+            @include('components.back_to_mollie', ['buttonLabel' => 'Add more information'])
 
         @endif
     </div>
