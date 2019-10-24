@@ -5,7 +5,6 @@ namespace Tests\Feature\Settings\Payment;
 use App\MollieAccessToken;
 use App\OnboardingStatus;
 use App\PaymentMethod;
-use App\PaymentProfile;
 use App\User;
 use ArrayIterator;
 use DateTime;
@@ -83,7 +82,7 @@ class StatusTest extends TestCase
         ]);
     }
 
-    public function testWhenMethodsAndProfilesAreLoadedThenShowOnView(): void
+    public function testWhenMethodsAreLoadedThenShowOnView(): void
     {
         $this->createAccessTokenForTest();
         $this->mockMollieClients();
@@ -94,28 +93,9 @@ class StatusTest extends TestCase
         $response = $this->json('GET', route('payment_status'));
 
         $response->assertViewHas('status', new OnboardingStatus('completed', true, true, 'http://example/dashboard'));
-        $response->assertViewHas('profiles', [
-            new PaymentProfile('profile_1', 'Profile 1', 'http://profile1.nl'),
-            new PaymentProfile('profile_2', 'Profile 2', 'http://profile2.nl'),
+        $response->assertViewHas('methods', [
+            'ideal' => new PaymentMethod('ideal', 'iDEAL'),
         ]);
-        $response->assertViewHas('methodsEnabled', [
-            'ideal' => new PaymentMethod('ideal', 'iDEAL', 'image.svg', true),
-        ]);
-        $response->assertViewHas('methodsDisabled', [
-            'applepay' => new PaymentMethod('applepay', 'Apple Pay', 'image.svg', false),
-            'creditcard' => new PaymentMethod('creditcard', 'Credit card', 'image.svg', false),
-        ]);
-    }
-
-    public function testWhenGivenAProfileIdThenLoadMethodsForIt(): void
-    {
-        $this->createAccessTokenForTest();
-        $this->mockMollieClients();
-
-        $this->apiClient->methods->expects($this->once())->method('allAvailable')->with(['profileId' => 'profile_2']);
-        $this->apiClient->methods->expects($this->once())->method('allActive')->with(['profileId' => 'profile_2']);
-
-        $this->json('GET', route('payment_status'), ['profile' => 'profile_2']);
     }
 
     private function createAccessTokenForTest(): void
@@ -144,8 +124,6 @@ class StatusTest extends TestCase
 
         $method->id = $id;
         $method->description = $description;
-        $method->image = new stdClass();
-        $method->image->svg = 'image.svg';
 
         return $method;
     }
