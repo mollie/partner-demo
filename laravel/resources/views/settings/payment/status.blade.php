@@ -39,6 +39,10 @@
                 Mollie is reviewing your account for settlements, this usually takes 1-2 business days.
             </p>
 
+            <a href="{{ $status->getDashboardLink() }}">
+                <button class="btn-primary rounded btn-lg">Go to Mollie Dashboard</button>
+            </a>
+
         @elseif($status->paymentsAndSettlementsAreDisabledBecauseMollieIsReviewing())
 
             <h1>Your account is being verified</h1>
@@ -49,6 +53,10 @@
                 your
                 integration with Mollie.
             </p>
+
+            <a href="{{ $status->getDashboardLink() }}">
+                <button class="btn-primary rounded btn-lg">Go to Mollie Dashboard</button>
+            </a>
 
         @elseif($status->paymentsAndSettlementsAreEnabled())
 
