@@ -58,7 +58,7 @@
                 Expect settlements on every Monday.
             </p>
 
-            @include('components.back_to_mollie', ['buttonLabel' => 'Add more information'])
+            @include('settings.payment.components.back_to_mollie', ['buttonLabel' => 'Add more information'])
 
         @endif
     </div>
