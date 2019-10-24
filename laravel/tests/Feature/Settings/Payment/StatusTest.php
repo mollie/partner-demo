@@ -87,7 +87,6 @@ class StatusTest extends TestCase
         $this->createAccessTokenForTest();
         $this->mockMollieClients();
 
-        $this->apiClient->methods->expects($this->once())->method('allAvailable')->with(['profileId' => 'profile_1']);
         $this->apiClient->methods->expects($this->once())->method('allActive')->with(['profileId' => 'profile_1']);
 
         $response = $this->json('GET', route('payment_status'));
