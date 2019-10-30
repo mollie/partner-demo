@@ -1159,16 +1159,16 @@
         },
         {
             "name": "mollie/oauth2-mollie-php",
-            "version": "v2.1.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mollie/oauth2-mollie-php.git",
-                "reference": "0aff391e6c5312ada2f51d64ee3a0bf46c5532db"
+                "reference": "f626d4242f5f2fa77b363edb4c9008bfdfaa4102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mollie/oauth2-mollie-php/zipball/0aff391e6c5312ada2f51d64ee3a0bf46c5532db",
-                "reference": "0aff391e6c5312ada2f51d64ee3a0bf46c5532db",
+                "url": "https://api.github.com/repos/mollie/oauth2-mollie-php/zipball/f626d4242f5f2fa77b363edb4c9008bfdfaa4102",
+                "reference": "f626d4242f5f2fa77b363edb4c9008bfdfaa4102",
                 "shasum": ""
             },
             "require": {
@@ -1225,7 +1225,7 @@
                 "sofort",
                 "sofortbanking"
             ],
-            "time": "2019-04-25T12:20:15+00:00"
+            "time": "2019-10-25T07:59:10+00:00"
         },
         {
             "name": "monolog/monolog",
