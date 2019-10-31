@@ -19,7 +19,8 @@ services:
             APP_KEY: ${APP_KEY}
             APP_DEBUG: ${APP_DEBUG}
             APP_URL: ${APP_URL}
-            MOLLIE_KEY: ${MOLLIE_KEY}
+            MOLLIE_API_URL: ${MOLLIE_API_URL}
+            MOLLIE_WEB_URL: ${MOLLIE_WEB_URL}
             MOLLIE_CLIENT_ID: ${MOLLIE_CLIENT_ID}
             MOLLIE_CLIENT_SECRET: ${MOLLIE_CLIENT_SECRET}
         ports:

@@ -13,7 +13,7 @@ class ApiClientServiceProviderTest extends TestCase
     {
         $client = $this->app->get(MollieApiClient::class);
 
-        $this->assertEquals(new MollieApiClient(), $client);
+        $this->assertInstanceOf(MollieApiClient::class, $client);
     }
 
     public function testWhenEnvHasDifferentMollieApiUrlThenSetOnClient(): void
